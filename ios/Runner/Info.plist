@@ -14,11 +14,11 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>nihonium</key>
+			<key>adamantium</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>In-Icon-App</string>
+					<string>Th-Icon-App</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -32,20 +32,20 @@
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>adamantium</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>Th-Icon-App</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
 			<key>infinitum</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>Ti-Icon-App</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>nihonium</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>In-Icon-App</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
