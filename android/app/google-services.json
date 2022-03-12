@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:895700624438:android:703780e67e8aaceb30a497",
         "android_client_info": {
-          "package_name": "com.bitcoinnano.infinitum"
+          "package_name": "org.bitcoinnano.infinitum"
         }
       },
       "oauth_client": [
@@ -29,6 +29,51 @@
             {
               "client_id": "895700624438-s12ae4epcof7kdq4t700i9tl5qbg4ilq.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "895700624438-3v4l5jvs2bfpftpn5a9t8k43cjed5b32.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.bitcoinnano.infinitum",
+                "app_store_id": "dbs.douglas@gmail.com"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895700624438:android:a16998786af19b7d30a497",
+        "android_client_info": {
+          "package_name": "org.bitcoinnano.infinitum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895700624438-s12ae4epcof7kdq4t700i9tl5qbg4ilq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUAzT7VqvNVuxlKg5CCgEGeAFc-b9YCQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895700624438-s12ae4epcof7kdq4t700i9tl5qbg4ilq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "895700624438-3v4l5jvs2bfpftpn5a9t8k43cjed5b32.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.bitcoinnano.infinitum",
+                "app_store_id": "dbs.douglas@gmail.com"
+              }
             }
           ]
         }

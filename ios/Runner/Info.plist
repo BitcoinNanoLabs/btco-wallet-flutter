@@ -79,7 +79,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.bitcoinnano.infinitum</string>
+			<string>org.bitcoinnano.infinitum</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>btco</string>

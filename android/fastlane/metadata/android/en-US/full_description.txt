@@ -24,7 +24,7 @@ Remember to backup your wallet seed and store it in a safe place. It is the only
 Infinitum is open source and available on GitHub.
 
 Github:
-https://github.com/appditto/natrium_wallet_flutter
+https://github.com/BitcoinNanoLabs/btco-wallet-flutter
 
 For support:
-https://help.natrium.io
+https://help.infinitum.bitcoinnano.org

@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.bitcoinnano.infinitum</string>
+	<string>org.bitcoinnano.infinitum</string>
 	<key>PROJECT_ID</key>
 	<string>infinitum-4d88d</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:895700624438:ios:74986fbb26cdb63130a497</string>
+	<string>1:895700624438:ios:37126a26ecf7d81230a497</string>
 </dict>
 </plist>

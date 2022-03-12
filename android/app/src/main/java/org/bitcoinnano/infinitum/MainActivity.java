@@ -1,4 +1,4 @@
-package com.bitcoinnano.infinitum;
+package org.bitcoinnano.infinitum;
 
 import android.os.Bundle;
 

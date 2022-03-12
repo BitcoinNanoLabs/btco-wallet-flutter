@@ -9,16 +9,16 @@ Infinitum is a cross-platform mobile wallet for the BTCO cryptocurrency. It is w
 
 | Link | Description |
 | :----- | :------ |
-[natrium.io](https://natrium.io) | Infinitum Homepage
-[nano.org](https://nano.org) | BTCO Cryptocurrency Homepage
+[infinitum.bitcoinnano.org](https://infinitum.bitcoinnano.org) | Infinitum Homepage
+[bitcoinnano.org](https://bitcoinnano.org) | BTCO Cryptocurrency Homepage
 
-![Infinitum Themes](https://natrium.io/assets/natrium-themes.jpg)
+![Infinitum Themes](https://infinitum.bitcoinnano.org/assets/natrium-themes.jpg)
 
-![Infinitum Quick Send](https://natrium.io/assets/natrium-qt-1.gif) ![Infinitum Add to Contacts](https://natrium.io/assets/natrium-qt-2.gif) ![Infinitum Change Representative](https://natrium.io/assets/natrium-qt-4.gif)
+![Infinitum Quick Send](https://infinitum.bitcoinnano.org/assets/natrium-qt-1.gif) ![Infinitum Add to Contacts](https://infinitum.bitcoinnano.org/assets/natrium-qt-2.gif) ![Infinitum Change Representative](https://infinitum.bitcoinnano.org/assets/natrium-qt-4.gif)
 
 ## Server
 
-Infinitum's backend server can be found [here](https://github.com/appditto/natrium-wallet-server)
+Infinitum's backend server can be found [here](https://github.com/BitcoinNanoLabs/btco-wallet-server)
 
 ## Contributing
 
@@ -28,6 +28,7 @@ Infinitum's backend server can be found [here](https://github.com/appditto/natri
 
 ## Building
 
+Android: `flutter build appbundle`
 Android (armeabi-v7a): `flutter build apk`
 Android (arm64-v8a): `flutter build apk --target=android-arm64`
 iOS: `flutter build ios`
