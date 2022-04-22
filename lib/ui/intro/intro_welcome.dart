@@ -33,7 +33,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
           final artboard = file.mainArtboard;
           // Add a controller to play back a known animation on the main/default
           // artboard.We store a reference to it so we can toggle playback.
-          artboard.addController(_controller = SimpleAnimation('idle'));
+          artboard.addController(_controller = SimpleAnimation('Animation 1'));
           setState(() => _riveArtboard = artboard);
           setState(() => _controller.isActive = true);
         }
@@ -66,10 +66,9 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                       width: double.infinity,
                       height: MediaQuery.of(context).size.width * 5 / 8,
                       child: Center(
-                        child:
-                          _riveArtboard == null
-                          ? const SizedBox()
-                          : Rive(artboard: _riveArtboard),
+                        child: _riveArtboard == null
+                            ? const SizedBox()
+                            : Rive(artboard: _riveArtboard),
                       ),
                     ),
                     //Container for the paragraph
