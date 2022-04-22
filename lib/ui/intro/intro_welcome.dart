@@ -7,6 +7,7 @@ import 'package:natrium_wallet_flutter/localization.dart';
 import 'package:natrium_wallet_flutter/ui/widgets/buttons.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:rive/rive.dart';
+import 'package:flutter/services.dart';
 
 class IntroWelcomePage extends StatefulWidget {
   @override
@@ -15,6 +16,30 @@ class IntroWelcomePage extends StatefulWidget {
 
 class _IntroWelcomePageState extends State<IntroWelcomePage> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  Artboard _riveArtboard;
+  RiveAnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    rootBundle.load('assets/welcome_animation.riv').then(
+      (data) async {
+        final file = RiveFile();
+
+        // Load the RiveFile from the binary data.
+        if (file.import(data)) {
+          // The artboard is the root of the animation and gets drawn in the
+          // Rive widget.
+          final artboard = file.mainArtboard;
+          // Add a controller to play back a known animation on the main/default
+          // artboard.We store a reference to it so we can toggle playback.
+          artboard.addController(_controller = SimpleAnimation('idle'));
+          setState(() => _riveArtboard = artboard);
+          setState(() => _controller.isActive = true);
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +67,9 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                       height: MediaQuery.of(context).size.width * 5 / 8,
                       child: Center(
                         child:
-                            RiveAnimation.asset("assets/welcome_animation.flr"),
+                          _riveArtboard == null
+                          ? const SizedBox()
+                          : Rive(artboard: _riveArtboard),
                       ),
                     ),
                     //Container for the paragraph
