@@ -143,6 +143,8 @@ dependencies:
 
   devicelocale: ^0.4.1
 
+  rive: ^0.6.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -194,6 +196,7 @@ flutter:
   assets:
     - assets/QR.svg
     - assets/welcome_animation.flr
+    - assets/welcome_animation.riv
     - assets/send_animation.flr
     - assets/manta_animation.flr
     - assets/transfer_animation_natriumwalletonly.flr
