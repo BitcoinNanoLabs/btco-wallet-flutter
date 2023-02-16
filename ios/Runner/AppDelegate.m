@@ -54,6 +54,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
                 [self lc_setAlternateIconName:@"chromium"];
             } else if ([@"adamantium" isEqualToString:icon]) {
                 [self lc_setAlternateIconName:@"adamantium"];
+            } else if ([@"carbon" isEqualToString:icon]) {
+                [self lc_setAlternateIconName:@"carbon"];
             }
         } else if ([@"setSecureClipboardItem" isEqualToString:call.method]) {
             NSDictionary *arguments = [call arguments];

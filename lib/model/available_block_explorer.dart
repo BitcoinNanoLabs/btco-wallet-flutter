@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:natrium_wallet_flutter/model/setting_item.dart';
 
-enum AvailableBlockExplorerEnum { BTCOBLOCK, BTCOEXPLORE }
+enum AvailableBlockExplorerEnum { BTCOBLOCK, BTCOEXPLORE, NANOCAFE }
 
 /// Represent the available authentication methods our app supports
 class AvailableBlockExplorer extends SettingSelectionItem {
@@ -16,6 +16,8 @@ class AvailableBlockExplorer extends SettingSelectionItem {
         return "block.bitcoinnano.org";
       case AvailableBlockExplorerEnum.BTCOEXPLORE:
         return "explore.bitcoinnano.org";
+      case AvailableBlockExplorerEnum.NANOCAFE:
+        return "nanocafe.cc";
       default:
         return "block.bitcoinnano.org";
     }

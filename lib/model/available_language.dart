@@ -6,6 +6,7 @@ enum AvailableLanguage {
   DEFAULT,
   ARABIC,
   ENGLISH,
+  CATALAN,
   CHINESE_SIMPLIFIED,
   CHINESE_TRADITIONAL,
   DANISH,
@@ -31,7 +32,10 @@ enum AvailableLanguage {
   SWEDISH,
   TAGALOG,
   TURKISH,
-  VIETNAMESE
+  VIETNAMESE,
+  UKRAINIAN,
+  NORWEGIAN,
+  BENGALI,
 }
 
 /// Represent the available languages our app supports
@@ -51,7 +55,7 @@ class LanguageSetting extends SettingSelectionItem {
       case AvailableLanguage.FRENCH:
         return "Français (fr)";
       case AvailableLanguage.DANISH:
-        return "Dansk (da)";        
+        return "Dansk (da)";
       case AvailableLanguage.GERMAN:
         return "Deutsch (de)";
       case AvailableLanguage.SPANISH:
@@ -98,6 +102,14 @@ class LanguageSetting extends SettingSelectionItem {
         return "繁體中文 (zh-Hant)";
       case AvailableLanguage.MALAY:
         return "Bahasa Melayu (ms)";
+      case AvailableLanguage.CATALAN:
+        return "Català (ca)";
+      case AvailableLanguage.UKRAINIAN:
+        return "Ukrainian (uk)";
+      case AvailableLanguage.NORWEGIAN:
+        return "Norsk (no)";
+      case AvailableLanguage.BENGALI:
+        return "Bengali (bn)";
       default:
         return AppLocalization.of(context).systemDefault;
     }
@@ -160,7 +172,15 @@ class LanguageSetting extends SettingSelectionItem {
       case AvailableLanguage.MALAY:
         return "ms";
       case AvailableLanguage.DANISH:
-        return "da";        
+        return "da";
+      case AvailableLanguage.CATALAN:
+        return "ca";
+      case AvailableLanguage.UKRAINIAN:
+        return "uk";
+      case AvailableLanguage.NORWEGIAN:
+        return "no";
+      case AvailableLanguage.BENGALI:
+        return "bn";
       default:
         return "DEFAULT";
     }
@@ -171,7 +191,8 @@ class LanguageSetting extends SettingSelectionItem {
     if (localeStr == 'DEFAULT') {
       return Locale('en');
     } else if (localeStr == 'zh-Hans' || localeStr == 'zh-Hant') {
-      return Locale.fromSubtags(languageCode: 'zh', scriptCode: localeStr.split('-')[1]);
+      return Locale.fromSubtags(
+          languageCode: 'zh', scriptCode: localeStr.split('-')[1]);
     }
     return Locale(localeStr);
   }

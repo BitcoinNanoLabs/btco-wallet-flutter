@@ -1,4 +1,3 @@
-- Indicate whether a transaction is unconfirmed or not
-- Allow changing default block explorer
-- Show relevant alerts regarding BTCO or Infinitum
-- Add Danish Translation
+- Use "Ӿ" currency symbol
+- Add Bengali language
+- General fixes & improvements

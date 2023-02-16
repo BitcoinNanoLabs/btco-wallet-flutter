@@ -99,7 +99,7 @@ class _AppHomePageState extends State<AppHomePage>
   double mainCardHeight;
   double settingsIconMarginTop = 5;
   // FCM instance
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   // Animation for swiping to send
   ActorAnimation _sendSlideAnimation;
@@ -152,6 +152,40 @@ class _AppHomePageState extends State<AppHomePage>
     }
   }
 
+  void getNotificationPermissions() async {
+    try {
+      NotificationSettings settings = await _firebaseMessaging
+          .requestPermission(sound: true, badge: true, alert: true);
+      if (settings.alert == AppleNotificationSetting.enabled ||
+          settings.badge == AppleNotificationSetting.enabled ||
+          settings.sound == AppleNotificationSetting.enabled ||
+          settings.authorizationStatus == AuthorizationStatus.authorized) {
+        sl.get<SharedPrefsUtil>().getNotificationsSet().then((beenSet) {
+          if (!beenSet) {
+            sl.get<SharedPrefsUtil>().setNotificationsOn(true);
+          }
+        });
+        _firebaseMessaging.getToken().then((String token) {
+          if (token != null) {
+            EventTaxiImpl.singleton().fire(FcmUpdateEvent(token: token));
+          }
+        });
+      } else {
+        sl.get<SharedPrefsUtil>().setNotificationsOn(false).then((_) {
+          _firebaseMessaging.getToken().then((String token) {
+            EventTaxiImpl.singleton().fire(FcmUpdateEvent(token: token));
+          });
+        });
+      }
+      String token = await _firebaseMessaging.getToken();
+      if (token != null) {
+        EventTaxiImpl.singleton().fire(FcmUpdateEvent(token: token));
+      }
+    } catch (e) {
+      sl.get<SharedPrefsUtil>().setNotificationsOn(false);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -194,49 +228,13 @@ class _AppHomePageState extends State<AppHomePage>
     _opacityAnimation.addStatusListener(_animationStatusListener);
     _placeholderCardAnimationController.forward();
     // Register push notifications
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        //print("onMessage: $message");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        if (message.containsKey('data')) {
-          await _chooseCorrectAccountFromNotification(message['data']);
-        }
-      },
-      onResume: (Map<String, dynamic> message) async {
-        if (message.containsKey('data')) {
-          await _chooseCorrectAccountFromNotification(message['data']);
-        }
-      },
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      if (settings.alert || settings.badge || settings.sound) {
-        sl.get<SharedPrefsUtil>().getNotificationsSet().then((beenSet) {
-          if (!beenSet) {
-            sl.get<SharedPrefsUtil>().setNotificationsOn(true);
-          }
-        });
-        _firebaseMessaging.getToken().then((String token) {
-          if (token != null) {
-            EventTaxiImpl.singleton().fire(FcmUpdateEvent(token: token));
-          }
-        });
-      } else {
-        sl.get<SharedPrefsUtil>().setNotificationsOn(false).then((_) {
-          _firebaseMessaging.getToken().then((String token) {
-            EventTaxiImpl.singleton().fire(FcmUpdateEvent(token: token));
-          });
-        });
-      }
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      try {
+        await _chooseCorrectAccountFromNotification(message.data);
+      } catch (e) {}
     });
-    _firebaseMessaging.getToken().then((String token) {
-      if (token != null) {
-        EventTaxiImpl.singleton().fire(FcmUpdateEvent(token: token));
-      }
-    });
+    // Setup notification
+    getNotificationPermissions();
   }
 
   void _animationStatusListener(AnimationStatus status) {
@@ -361,10 +359,11 @@ class _AppHomePageState extends State<AppHomePage>
       }
     });
     // Handle subscribe
-    _confirmEventSub =
-        EventTaxiImpl.singleton().registerTo<ConfirmationHeightChangedEvent>().listen((event) {
+    _confirmEventSub = EventTaxiImpl.singleton()
+        .registerTo<ConfirmationHeightChangedEvent>()
+        .listen((event) {
       updateConfirmationHeights(event.confirmationHeight);
-    });    
+    });
   }
 
   @override
@@ -397,28 +396,56 @@ class _AppHomePageState extends State<AppHomePage>
 
   void updateConfirmationHeights(int confirmationHeight) {
     setState(() {
-      currentConfHeight = confirmationHeight;
+      currentConfHeight = confirmationHeight + 1;
     });
-    if (!_historyListMap.containsKey(StateContainer.of(context).wallet.address)) {
+    if (!_historyListMap
+        .containsKey(StateContainer.of(context).wallet.address)) {
       return;
     }
     List<int> unconfirmedUpdate = List();
     List<int> confirmedUpdate = List();
-    for (int i = 0; i < _historyListMap[StateContainer.of(context).wallet.address].items.length; i++) {
-      if ((_historyListMap[StateContainer.of(context).wallet.address][i].confirmed == null || _historyListMap[StateContainer.of(context).wallet.address][i].confirmed) && _historyListMap[StateContainer.of(context).wallet.address][i].height != null && confirmationHeight < _historyListMap[StateContainer.of(context).wallet.address][i].height) {
+    for (int i = 0;
+        i <
+            _historyListMap[StateContainer.of(context).wallet.address]
+                .items
+                .length;
+        i++) {
+      if ((_historyListMap[StateContainer.of(context).wallet.address][i]
+                      .confirmed ==
+                  null ||
+              _historyListMap[StateContainer.of(context).wallet.address][i]
+                  .confirmed) &&
+          _historyListMap[StateContainer.of(context).wallet.address][i]
+                  .height !=
+              null &&
+          confirmationHeight <
+              _historyListMap[StateContainer.of(context).wallet.address][i]
+                  .height) {
         unconfirmedUpdate.add(i);
-      } else if ((_historyListMap[StateContainer.of(context).wallet.address][i].confirmed == null || !_historyListMap[StateContainer.of(context).wallet.address][i].confirmed) && _historyListMap[StateContainer.of(context).wallet.address][i].height != null && confirmationHeight >= _historyListMap[StateContainer.of(context).wallet.address][i].height) {
+      } else if ((_historyListMap[StateContainer.of(context).wallet.address][i]
+                      .confirmed ==
+                  null ||
+              !_historyListMap[StateContainer.of(context).wallet.address][i]
+                  .confirmed) &&
+          _historyListMap[StateContainer.of(context).wallet.address][i]
+                  .height !=
+              null &&
+          confirmationHeight >=
+              _historyListMap[StateContainer.of(context).wallet.address][i]
+                  .height) {
         confirmedUpdate.add(i);
       }
     }
     unconfirmedUpdate.forEach((element) {
-      setState((){
-        _historyListMap[StateContainer.of(context).wallet.address][element].confirmed = false;
+      setState(() {
+        _historyListMap[StateContainer.of(context).wallet.address][element]
+            .confirmed = false;
       });
     });
     confirmedUpdate.forEach((element) {
-      setState((){
-        _historyListMap[StateContainer.of(context).wallet.address][element].confirmed = true;
+      setState(() {
+        _historyListMap[StateContainer.of(context).wallet.address][element]
+            .confirmed = true;
       });
     });
   }
@@ -510,7 +537,7 @@ class _AppHomePageState extends State<AppHomePage>
         displayName = contact.name;
       }
     });
-    
+
     return _buildTransactionCard(
         _historyListMap[StateContainer.of(context).wallet.address][localIndex],
         animation,
@@ -690,7 +717,8 @@ class _AppHomePageState extends State<AppHomePage>
     if (StateContainer.of(context).wallet.loading) {
       StateContainer.of(context).requestSubscribe();
     } else {
-      updateConfirmationHeights(StateContainer.of(context).wallet.confirmationHeight);
+      updateConfirmationHeights(
+          StateContainer.of(context).wallet.confirmationHeight);
     }
   }
 
@@ -699,12 +727,14 @@ class _AppHomePageState extends State<AppHomePage>
     if (address.isValid()) {
       String amount;
       String contactName;
+      bool sufficientBalance = false;
       if (address.amount != null) {
         BigInt amountBigInt = BigInt.tryParse(address.amount);
         // Require minimum 1 rai to send, and make sure sufficient balance
-        if (amountBigInt != null &&
-            StateContainer.of(context).wallet.accountBalance > amountBigInt &&
-            amountBigInt >= BigInt.from(10).pow(24)) {
+        if (amountBigInt != null && amountBigInt >= BigInt.from(10).pow(24)) {
+          if (StateContainer.of(context).wallet.accountBalance > amountBigInt) {
+            sufficientBalance = true;
+          }
           amount = address.amount;
         }
       }
@@ -716,7 +746,7 @@ class _AppHomePageState extends State<AppHomePage>
       }
       // Remove any other screens from stack
       Navigator.of(context).popUntil(RouteUtils.withNameLike('/home'));
-      if (amount != null) {
+      if (amount != null && sufficientBalance) {
         // Go to send confirm with amount
         Sheets.showAppHeightNineSheet(
             context: context,
@@ -731,7 +761,8 @@ class _AppHomePageState extends State<AppHomePage>
             widget: SendSheet(
                 localCurrency: StateContainer.of(context).curCurrency,
                 contact: contact,
-                address: address.address));
+                address: address.address,
+                quickSendAmount: amount != null ? amount : null));
       }
     } else if (MantaWallet.parseUrl(link) != null) {
       // Manta URI handling
@@ -775,7 +806,7 @@ class _AppHomePageState extends State<AppHomePage>
       setState(() {
         receive = ReceiveSheet(
           qrWidget: Container(
-              width: MediaQuery.of(context).size.width / 2.675,
+              width: MediaQuery.of(context).size.width / 1,
               child: Image.memory(byteData.buffer.asUint8List())),
         );
       });
@@ -794,6 +825,7 @@ class _AppHomePageState extends State<AppHomePage>
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       backgroundColor: StateContainer.of(context).curTheme.background,
+      drawerScrimColor: StateContainer.of(context).curTheme.barrierWeaker,
       drawer: SizedBox(
         width: UIUtil.drawerWidth(context),
         child: Drawer(
@@ -1101,15 +1133,11 @@ class _AppHomePageState extends State<AppHomePage>
                                   text: '',
                                   children: [
                                     TextSpan(
-                                      text: item.getFormattedAmount(),
+                                      text: "Ӿ" + item.getFormattedAmount(),
                                       style:
                                           AppStyles.textStyleTransactionAmount(
-                                              context),
-                                    ),
-                                    TextSpan(
-                                      text: " BTCO",
-                                      style: AppStyles.textStyleTransactionUnit(
-                                          context),
+                                        context,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -1132,7 +1160,10 @@ class _AppHomePageState extends State<AppHomePage>
                           ),
 
                           // TRANSACTION STATE TAG
-                          (item.confirmed != null && !item.confirmed) || (currentConfHeight > -1 && item.height != null && item.height > currentConfHeight)
+                          (item.confirmed != null && !item.confirmed) ||
+                                  (currentConfHeight > -1 &&
+                                      item.height != null &&
+                                      item.height > currentConfHeight)
                               ? Container(
                                   margin: EdgeInsetsDirectional.only(
                                     top: 4,
@@ -1215,14 +1246,10 @@ class _AppHomePageState extends State<AppHomePage>
                               text: '',
                               children: [
                                 TextSpan(
-                                  text: amount,
+                                  text: amount + " NANO",
                                   style: AppStyles.textStyleTransactionAmount(
-                                      context),
-                                ),
-                                TextSpan(
-                                  text: " BTCO",
-                                  style: AppStyles.textStyleTransactionUnit(
-                                      context),
+                                    context,
+                                  ),
                                 ),
                               ],
                             ),
@@ -1571,29 +1598,33 @@ class _AppHomePageState extends State<AppHomePage>
                       color: StateContainer.of(context).curTheme.text,
                       size: 24,
                     ),
-                    !StateContainer.of(context).activeAlertIsRead ?
-                    // Unread message dot
-                    Positioned(
-                      top: -3,
-                      right: -3,
-                      child: Container(
-                        padding: EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          color: StateContainer.of(context)
-                              .curTheme
-                              .backgroundDark,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: StateContainer.of(context).curTheme.success,
-                            shape: BoxShape.circle,
-                          ),
-                          height: 11,
-                          width: 11,
-                        ),
-                      ),
-                    ) : SizedBox()
+                    !StateContainer.of(context).activeAlertIsRead
+                        ?
+                        // Unread message dot
+                        Positioned(
+                            top: -3,
+                            right: -3,
+                            child: Container(
+                              padding: EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                color: StateContainer.of(context)
+                                    .curTheme
+                                    .backgroundDark,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: StateContainer.of(context)
+                                      .curTheme
+                                      .success,
+                                  shape: BoxShape.circle,
+                                ),
+                                height: 11,
+                                width: 11,
+                              ),
+                            ),
+                          )
+                        : SizedBox()
                   ],
                 ),
               ),
@@ -1884,7 +1915,6 @@ class _AppHomePageState extends State<AppHomePage>
                             style: AppStyles.textStyleCurrencyAlt(context))
                         : SizedBox(height: 0),
                     Container(
-                      margin: EdgeInsetsDirectional.only(end: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -1896,30 +1926,18 @@ class _AppHomePageState extends State<AppHomePage>
                             child: AutoSizeText.rich(
                               TextSpan(
                                 children: [
-                                  // Currency Icon
-                                  TextSpan(
-                                    text: "",
-                                    style: TextStyle(
-                                      fontFamily: 'AppIcons',
-                                      color: StateContainer.of(context)
-                                          .curTheme
-                                          .primary,
-                                      fontSize: _priceConversion ==
-                                              PriceConversion.BTC
-                                          ? 26.0
-                                          : 20,
-                                    ),
-                                  ),
                                   // Main balance text
                                   TextSpan(
-                                    text: StateContainer.of(context)
-                                        .wallet
-                                        .getAccountBalanceDisplay(),
+                                    text: "Ӿ" +
+                                        StateContainer.of(context)
+                                            .wallet
+                                            .getAccountBalanceDisplay(),
                                     style: _priceConversion ==
                                             PriceConversion.BTC
                                         ? AppStyles.textStyleCurrency(context)
                                         : AppStyles.textStyleCurrencySmaller(
-                                            context),
+                                            context,
+                                          ),
                                   ),
                                 ],
                               ),

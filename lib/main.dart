@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -46,6 +47,8 @@ void main() async {
   } else {
     Logger.level = Level.debug;
   }
+  // Setup firebase
+  await Firebase.initializeApp();
   // Run app
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -76,14 +79,14 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         title: 'Infinitum',
         theme: ThemeData(
-          dialogBackgroundColor:
-              StateContainer.of(context).curTheme.backgroundDark,
-          primaryColor: StateContainer.of(context).curTheme.primary,
-          accentColor: StateContainer.of(context).curTheme.primary10,
-          backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
-          fontFamily: 'NunitoSans',
-          brightness: Brightness.dark,
-        ),
+            dialogBackgroundColor:
+                StateContainer.of(context).curTheme.backgroundDark,
+            primaryColor: StateContainer.of(context).curTheme.primary,
+            accentColor: StateContainer.of(context).curTheme.primary10,
+            backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
+            fontFamily: 'NunitoSans',
+            brightness: Brightness.dark,
+            useMaterial3: true),
         localizationsDelegates: [
           AppLocalizationsDelegate(StateContainer.of(context).curLanguage),
           GlobalMaterialLocalizations.delegate,
@@ -120,12 +123,16 @@ class _AppState extends State<App> {
           const Locale('tl'), // Tagalog
           const Locale('tr'), // Turkish
           const Locale('vi'), // Vietnamese
+          const Locale('ca'), // Catalan
+          const Locale('uk'), // Ukrainian
+          const Locale('no'), // Norwegian
           const Locale.fromSubtags(
               languageCode: 'zh', scriptCode: 'Hans'), // Chinese Simplified
           const Locale.fromSubtags(
               languageCode: 'zh', scriptCode: 'Hant'), // Chinese Traditional
           const Locale('ar'), // Arabic
           const Locale('lv'), // Latvian
+          const Locale('bn'), // Bengali
           // Currency-default requires country included
           const Locale("es", "AR"),
           const Locale("en", "AU"),
@@ -186,6 +193,10 @@ class _AppState extends State<App> {
           const Locale("ar", "AE"), // UAE
           const Locale("ar", "SA"), // Saudi Arabia
           const Locale("ar", "KW"), // Kuwait
+          const Locale("uk", "UA"), // Ukraine
+          const Locale("no", "NO"), // Norway
+          const Locale("bn", "BD"), // Bangladesh
+          const Locale("bn", "IN"), // India/Bengali
         ],
         initialRoute: '/',
         onGenerateRoute: (RouteSettings settings) {
@@ -266,7 +277,9 @@ class _AppState extends State<App> {
                   opaque: false);
             case '/avatar_change_page':
               return MaterialPageRoute(
-                builder: (_) => AvatarChangePage(curAddress: StateContainer.of(context).selectedAccount.address),
+                builder: (_) => AvatarChangePage(
+                    curAddress:
+                        StateContainer.of(context).selectedAccount.address),
                 settings: settings,
               );
             case '/before_scan_screen':

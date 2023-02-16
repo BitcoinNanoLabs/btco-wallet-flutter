@@ -40,9 +40,9 @@ import 'package:natrium_wallet_flutter/network/model/response/process_response.d
 import 'package:natrium_wallet_flutter/bus/events.dart';
 
 // Server Connection String
-//const String _SERVER_ADDRESS = "wss://app.natrium.io";
-//const String _SERVER_ADDRESS_HTTP = "https://app.natrium.io/api";
-//const String _SERVER_ADDRESS_ALERTS = "https://app.natrium.io/alerts";
+//const String _SERVER_ADDRESS = "wss://testapp.natrium.io";
+//const String _SERVER_ADDRESS_HTTP = "https://testapp.natrium.io/api";
+//const String _SERVER_ADDRESS_ALERTS = "https://testapp.natrium.io/alerts";
 
 const String _SERVER_ADDRESS = "ws://207.244.255.183:5076/";
 const String _SERVER_ADDRESS_HTTP = "http://207.244.255.183:5076/api";
@@ -352,20 +352,18 @@ class AccountService {
   // HTTP API
 
   Future<dynamic> makeHttpRequest(BaseRequest request) async {
-    log.d(_SERVER_ADDRESS_HTTP);
-    log.d(json.encode(request.toJson()));
-    http.Response response = await http.post(_SERVER_ADDRESS_HTTP,
+    http.Response response = await http.post(Uri.parse(_SERVER_ADDRESS_HTTP),
         headers: {'Content-type': 'application/json'},
         body: json.encode(request.toJson()));
-    if (response.statusCode != 200) {
-      log.d(response);
-      return null;
+    try {
+      Map decoded = json.decode(response.body);
+      if (decoded.containsKey("error")) {
+        return ErrorResponse.fromJson(decoded);
+      }
+      return decoded;
+    } catch (e) {
+      return ErrorResponse(error: "Invalid response from server");
     }
-    Map decoded = json.decode(response.body);
-    if (decoded.containsKey("error")) {
-      return ErrorResponse.fromJson(decoded);
-    }
-    return decoded;
   }
 
   Future<AccountInfoResponse> getAccountInfo(String account) async {
@@ -554,19 +552,17 @@ class AccountService {
 
     return await requestProcess(processRequest);
   }
-  
+
   Future<AlertResponseItem> getAlert(String lang) async {
     log.d(_SERVER_ADDRESS_ALERTS + "/" + lang);
     http.Response response = await http.get(
-      _SERVER_ADDRESS_ALERTS + "/" + lang,
-      headers: {"Accept": "application/json"}
-    );
-    log.d(response);
+        Uri.parse(_SERVER_ADDRESS_ALERTS + "/" + lang),
+        headers: {"Accept": "application/json"});
     if (response.statusCode == 200) {
       List<AlertResponseItem> alerts;
       alerts = (json.decode(response.body) as List)
-      .map((i) => AlertResponseItem.fromJson(i))
-      .toList();
+          .map((i) => AlertResponseItem.fromJson(i))
+          .toList();
       if (alerts.length > 0) {
         if (alerts[0].active) {
           return alerts[0];

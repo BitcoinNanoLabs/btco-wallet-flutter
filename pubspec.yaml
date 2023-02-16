@@ -6,8 +6,7 @@ description: BTCOW - Fast, Robust & Secure Infinitum.
 # followed by an optional build number separated by a +.
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
-# Read more about versioning at semver.org.
-version: 2.5.2+88
+version: 2.4.5+83
 
 environment:
   sdk: ">=2.11.99 <3.0.0"
@@ -19,48 +18,48 @@ dependencies:
     sdk: flutter
 
   # Securley store data in a keystore
-  flutter_secure_storage: ^4.1.0
+  flutter_secure_storage: ^5.0.2
 
   # Nano core functions
   flutter_nano_ffi:
     path: ../flutter_nano_ffi
 
   # Shared prefs
-  shared_preferences: ^2.0.5
+  shared_preferences: ^2.0.8
 
   # Flare for animations
   flare_flutter: ^2.0.6
 
   # Websockets
-  web_socket_channel: ^1.0.9
+  web_socket_channel: ^2.0.0
 
   # Platform-specific build info
-  package_info: ^2.0.0
+  package_info: ^2.0.2
 
   # Device-specific info
-  device_info: ^2.0.0
+  device_info: ^2.0.3
 
   # JSON Serialization
-  json_annotation: ^3.1.1
+  json_annotation: ^4.3.0
 
   # Localization
   intl: ^0.17.0
 
   # BigDecimal alternative
-  decimal: ^1.0.0
+  decimal: ^1.3.0
 
   # Logger
   logger: ^1.0.0
 
   # Native webview plugin
-  flutter_webview_plugin: ^0.3.11
+  flutter_webview_plugin: ^0.4.0
 
   # SQLite
-  sqflite: ^2.0.0+3
+  sqflite: ^2.0.0+4
 
   # Android/iOS path provider
   path_provider: ^2.0.1
-  
+
   # TouchID/FaceID
   local_auth: ^1.0.0-nullsafety.3
   # Eventbus
@@ -68,7 +67,7 @@ dependencies:
 
   # SVG
   flutter_svg: ^0.22.0
-    
+
   # QR Codes
   qr_flutter: ^2.0.1 # Generator
   barcode_scan:
@@ -94,7 +93,7 @@ dependencies:
       ref: master
 
   # HTTP client
-  http: ^0.12.1
+  http: ^0.13.4
 
   # Vibrate
   vibrate:
@@ -106,7 +105,8 @@ dependencies:
   oktoast: ^3.0.0
 
   # Push notifications
-  firebase_messaging: ^7.0.3
+  firebase_messaging: ^11.1.0
+  firebase_core: ^1.10.0
 
   # Slidable list actions
   flutter_slidable: ^0.5.7
@@ -135,6 +135,8 @@ dependencies:
   # Launch external URLs
   url_launcher: ^6.0.2
 
+  quiver: ^3.0.1+1
+
   # Manta dart implementation
   manta_dart:
     git:
@@ -143,13 +145,17 @@ dependencies:
 
   devicelocale: ^0.4.1
 
+dependency_overrides:
+  analyzer: ^2.7.0
+  dart_style: ^2.0.0
+
   rive: ^0.6.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: 1.11.1
-  json_serializable: ^3.5.1
+  build_runner: 2.1.5
+  json_serializable: ^6.0.1
   intl_translation:
     git:
       url: https://github.com/bbedward/intl_translation.git
@@ -217,7 +223,7 @@ flutter:
     - assets/pulltosend_animation.flr
     - assets/sheethandle_animation.flr
     - assets/ntr_placeholder_animation.flr
-    
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

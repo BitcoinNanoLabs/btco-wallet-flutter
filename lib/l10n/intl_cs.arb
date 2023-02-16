@@ -50,7 +50,7 @@
   "sending": "Odesílání",
   "to": "Pro",
   "sendAmountConfirm": "Odeslat %1 BTCO",
-  "sendError": "Nastala chyba. Zkuste to později znovu.",
+  "sendError": "Došlo k chybě. Zkuste to později.",
   "enterAmount": "Zadejte částku",
   "enterAddress": "Zadejte adresu",
   "invalidAddress": "Zadaná adresa není platná",
@@ -222,6 +222,6 @@
   "newAccountIntroKal": "Toto je váš nový účet. Jakmile obdržíte BTCO, transakce se zobrazí takto:",
   "liveSupportButton": "Podpora",
   "connectingHeader": "Připojování",
-  "minimumSend": "Minimální částka pro odeslání je% 1 BTCO",
+  "minimumSend": "Minimální částka pro odeslání je% 1 NANO",
   "natricon": "Natricon"
 }
