@@ -1,5 +1,5 @@
 name: natrium_wallet_flutter
-description: BTCOW - Fast, Robust & Secure Infinitum.
+description: BTCOW - Fast, Robust & Secure Infinitum Wallet.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -22,8 +22,9 @@ dependencies:
 
   # Nano core functions
   flutter_nano_ffi:
-    path: ../flutter_nano_ffi
-
+    git:
+      url: https://github.com/appditto/flutter_nano_ffi.git
+      ref: master
   # Shared prefs
   shared_preferences: ^2.0.8
 
@@ -200,7 +201,6 @@ flutter:
   assets:
     - assets/QR.svg
     - assets/welcome_animation.flr
-    - assets/welcome_animation.riv
     - assets/send_animation.flr
     - assets/manta_animation.flr
     - assets/transfer_animation_natriumwalletonly.flr
