@@ -50,8 +50,6 @@ import 'package:natrium_wallet_flutter/util/ninja/api.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flare_flutter/flare_actor.dart';
 
-import '../../appstate_container.dart';
-import '../../util/sharedprefsutil.dart';
 
 class SettingsSheet extends StatefulWidget {
   _SettingsSheetState createState() => _SettingsSheetState();

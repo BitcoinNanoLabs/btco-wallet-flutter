@@ -5,11 +5,9 @@ import 'dart:math';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_nano_ffi/flutter_nano_ffi.dart';
-import 'package:natrium_wallet_flutter/localization.dart';
 import 'package:natrium_wallet_flutter/model/available_block_explorer.dart';
 import 'package:natrium_wallet_flutter/model/wallet.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:natrium_wallet_flutter/network/model/response/accounts_balances_response.dart';
@@ -27,7 +25,6 @@ import 'package:natrium_wallet_flutter/model/db/account.dart';
 import 'package:natrium_wallet_flutter/util/ninja/api.dart';
 import 'package:natrium_wallet_flutter/util/ninja/ninja_node.dart';
 import 'package:natrium_wallet_flutter/network/model/block_types.dart';
-import 'package:natrium_wallet_flutter/network/model/request/account_history_request.dart';
 import 'package:natrium_wallet_flutter/network/model/request/fcm_update_request.dart';
 import 'package:natrium_wallet_flutter/network/model/request/subscribe_request.dart';
 import 'package:natrium_wallet_flutter/network/model/response/account_history_response.dart';
@@ -43,7 +40,6 @@ import 'package:natrium_wallet_flutter/util/nanoutil.dart';
 import 'package:natrium_wallet_flutter/network/account_service.dart';
 import 'package:natrium_wallet_flutter/bus/events.dart';
 
-import 'util/sharedprefsutil.dart';
 
 class _InheritedStateContainer extends InheritedWidget {
   // Data is your entire state. In our case just 'User'

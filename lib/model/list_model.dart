@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 /// Keeps a Dart List in sync with an AnimatedList.
 ///

@@ -546,7 +546,7 @@ class CarbonTheme extends BaseTheme {
     spreadRadius: 0,
   );
 
-  OverlayTheme qrScanTheme = OverlayTheme.CARBON;
+  OverlayTheme qrScanTheme = OverlayTheme.NATRIUM;
   AppIconEnum appIcon = AppIconEnum.CARBON;
 }
 

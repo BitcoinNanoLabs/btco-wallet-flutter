@@ -82,11 +82,9 @@ class _AppState extends State<App> {
             dialogBackgroundColor:
                 StateContainer.of(context).curTheme.backgroundDark,
             primaryColor: StateContainer.of(context).curTheme.primary,
-            accentColor: StateContainer.of(context).curTheme.primary10,
-            backgroundColor: StateContainer.of(context).curTheme.backgroundDark,
             fontFamily: 'NunitoSans',
             brightness: Brightness.dark,
-            useMaterial3: true),
+            useMaterial3: true, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: StateContainer.of(context).curTheme.primary10)),
         localizationsDelegates: [
           AppLocalizationsDelegate(StateContainer.of(context).curLanguage),
           GlobalMaterialLocalizations.delegate,

@@ -13,7 +13,7 @@ import 'package:pointycastle/asymmetric/api.dart' show RSAPublicKey;
 class MantaUtil {
   // Utilities for the manta protocol
   static Future<PaymentRequestMessage> getPaymentDetails(MantaWallet manta) async {
-    await manta.connect();
+    manta.connect();
     final RSAPublicKey cert = await manta.getCertificate();
     final PaymentRequestEnvelope payReqEnv = await manta.getPaymentRequest(
       cryptoCurrency: "BTCO");

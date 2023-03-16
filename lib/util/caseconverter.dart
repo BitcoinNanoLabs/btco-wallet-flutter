@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:natrium_wallet_flutter/appstate_container.dart';
 

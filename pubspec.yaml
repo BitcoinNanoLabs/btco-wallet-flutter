@@ -22,9 +22,8 @@ dependencies:
 
   # Nano core functions
   flutter_nano_ffi:
-    git:
-      url: https://github.com/appditto/flutter_nano_ffi.git
-      ref: master
+    path: ../flutter_nano_ffi
+
   # Shared prefs
   shared_preferences: ^2.0.8
 

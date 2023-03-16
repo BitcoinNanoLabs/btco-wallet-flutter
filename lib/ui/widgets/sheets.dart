@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:natrium_wallet_flutter/appstate_container.dart';
 import 'package:natrium_wallet_flutter/ui/util/routes.dart';
 
-/** TODO - Replace all usage with the class in sheet_util.dart */
+/// TODO - Replace all usage with the class in sheet_util.dart
 class AppSheets {
   //App Ninty Height Sheet
   static Future<T> showAppHeightNineSheet<T>(
