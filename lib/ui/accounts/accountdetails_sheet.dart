@@ -81,15 +81,25 @@ class AccountDetailsSheet {
                                         top: 10.0, start: 10.0),
                                     child: account.index == 0
                                         ? SizedBox()
-                                        : FlatButton(
-                                            highlightColor:
-                                                StateContainer.of(context)
-                                                    .curTheme
-                                                    .text15,
-                                            splashColor:
-                                                StateContainer.of(context)
-                                                    .curTheme
-                                                    .text15,
+                                        : TextButton(
+                                            style: TextButton.styleFrom(
+                                              padding: EdgeInsets.all(13.0),
+                                              shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                                              ),
+                                              tapTargetSize: MaterialTapTargetSize.padded,
+                                            ).copyWith(
+                                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                                (Set<MaterialState> states) {
+                                                  if (states.contains(MaterialState.focused))
+                                                    return StateContainer.of(context).curTheme.text15;
+                                                  if (states.contains(MaterialState.hovered))
+                                                    return StateContainer.of(context).curTheme.text15;
+                                                  if (states.contains(MaterialState.pressed))
+                                                    return StateContainer.of(context).curTheme.text15;
+                                                  return null;
+                                              }),
+                                            ),
                                             onPressed: () {
                                               AppDialogs.showConfirmDialog(
                                                   context,
@@ -134,14 +144,8 @@ class AccountDetailsSheet {
                                                     StateContainer.of(context)
                                                         .curTheme
                                                         .text),
-                                            padding: EdgeInsets.all(13.0),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.0)),
-                                            materialTapTargetSize:
-                                                MaterialTapTargetSize.padded,
-                                          )),
+                                          ),
+                                        ),
                                 // The header of the sheet
                                 Container(
                                   margin: EdgeInsets.only(top: 25.0),

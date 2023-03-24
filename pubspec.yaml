@@ -22,7 +22,7 @@ dependencies:
 
   # Nano core functions
   flutter_nano_ffi:
-    path: ../flutter_nano_ffi
+    path: ../appditto/flutter_nano_ffi
 
   # Shared prefs
   shared_preferences: ^2.0.8
@@ -105,8 +105,8 @@ dependencies:
   oktoast: ^3.0.0
 
   # Push notifications
-  firebase_messaging: ^11.1.0
-  firebase_core: ^1.10.0
+  firebase_messaging: ^14.3.0
+  firebase_core: ^2.8.0
 
   # Slidable list actions
   flutter_slidable: ^0.5.7

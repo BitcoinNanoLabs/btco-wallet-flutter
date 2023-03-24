@@ -34,7 +34,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     lintOptions {
         disable 'InvalidPackage'
@@ -43,7 +43,7 @@ android {
     defaultConfig {
         applicationId "com.bitcoinnano.infinitum"
         minSdkVersion 19
-        targetSdkVersion 32
+        targetSdkVersion 33
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

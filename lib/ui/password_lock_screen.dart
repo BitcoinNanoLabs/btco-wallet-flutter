@@ -58,9 +58,24 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100)),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                          ),
+                        ).copyWith(
+                          overlayColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.focused))
+                                return StateContainer.of(context).curTheme.text15;
+                              if (states.contains(MaterialState.hovered))
+                                  return StateContainer.of(context).curTheme.text15;
+                              if (states.contains(MaterialState.pressed))
+                                  return StateContainer.of(context).curTheme.text30;
+                              return null;
+                          }),
+                        ),
                         onPressed: () {
                           AppDialogs.showConfirmDialog(
                               context,
@@ -105,10 +120,6 @@ class _AppPasswordLockScreenState extends State<AppPasswordLockScreen> {
                             });
                           });
                         },
-                        highlightColor:
-                            StateContainer.of(context).curTheme.text15,
-                        splashColor: StateContainer.of(context).curTheme.text30,
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                         child: Container(
                           child: Row(
                             children: <Widget>[

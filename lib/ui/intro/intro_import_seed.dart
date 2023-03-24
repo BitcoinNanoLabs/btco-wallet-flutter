@@ -64,42 +64,61 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                 start: smallScreen(context) ? 15 : 20),
                             height: 50,
                             width: 50,
-                            child: FlatButton(
-                                highlightColor:
-                                    StateContainer.of(context).curTheme.text15,
-                                splashColor:
-                                    StateContainer.of(context).curTheme.text15,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0)),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
                                 padding: EdgeInsets.all(0.0),
-                                child: Icon(AppIcons.back,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                                ),
+                              ).copyWith(
+                                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.focused))
+                                      return StateContainer.of(context).curTheme.text15;
+                                    if (states.contains(MaterialState.hovered))
+                                        return StateContainer.of(context).curTheme.text15;
+                                    if (states.contains(MaterialState.pressed))
+                                        return StateContainer.of(context).curTheme.text15;
+                                    return null;
+                                }),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Icon(AppIcons.back,
                                     color: StateContainer.of(context)
                                         .curTheme
                                         .text,
-                                    size: 24)),
+                                size: 24)),
                           ),
                           // Switch between Secret Phrase and Seed
                           Container(
                             margin: EdgeInsetsDirectional.only(
                                 end: smallScreen(context) ? 15 : 20),
-                            child: FlatButton(
-                              highlightColor:
-                                  StateContainer.of(context).curTheme.text15,
-                              splashColor:
-                                  StateContainer.of(context).curTheme.text15,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsetsDirectional.only(
+                                  top: 6, bottom: 6, start: 12, end: 12),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                                ),
+                              ).copyWith(
+                                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                                    if (states.contains(MaterialState.focused))
+                                      return StateContainer.of(context).curTheme.text15;
+                                    if (states.contains(MaterialState.hovered))
+                                        return StateContainer.of(context).curTheme.text15;
+                                    if (states.contains(MaterialState.pressed))
+                                        return StateContainer.of(context).curTheme.text15;
+                                    return null;
+                                }),
+                              ),
                               onPressed: () {
                                 setState(() {
                                   _seedMode = !_seedMode;
                                 });
                               },
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                              padding: EdgeInsetsDirectional.only(
-                                  top: 6, bottom: 6, start: 12, end: 12),
                               child: Row(
                                 children: [
                                   Container(
@@ -543,83 +562,94 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                       margin: EdgeInsetsDirectional.only(end: 30),
                       height: 50,
                       width: 50,
-                      child: FlatButton(
-                          highlightColor:
-                              StateContainer.of(context).curTheme.primary15,
-                          splashColor:
-                              StateContainer.of(context).curTheme.primary30,
-                          onPressed: () {
-                            if (_seedMode) {
-                              _seedInputFocusNode.unfocus();
-                              // If seed valid, log them in
-                              if (NanoSeeds.isValidSeed(
-                                  _seedInputController.text)) {
-                                sl
-                                    .get<SharedPrefsUtil>()
-                                    .setSeedBackedUp(true)
-                                    .then((result) {
-                                  Navigator.pushNamed(
-                                      context, '/intro_password_on_launch',
-                                      arguments: _seedInputController.text);
-                                });
-                              } else {
-                                // Display error
-                                setState(() {
-                                  _showSeedError = true;
-                                });
-                              }
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.all(0.0),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          ),
+                        ).copyWith(
+                          overlayColor: MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.focused))
+                                return StateContainer.of(context).curTheme.primary15;
+                              if (states.contains(MaterialState.hovered))
+                                  return StateContainer.of(context).curTheme.primary15;
+                              if (states.contains(MaterialState.pressed))
+                                  return StateContainer.of(context).curTheme.primary30;
+                              return null;
+                          }),
+                        ),
+                        onPressed: () {
+                          if (_seedMode) {
+                            _seedInputFocusNode.unfocus();
+                            // If seed valid, log them in
+                            if (NanoSeeds.isValidSeed(
+                                _seedInputController.text)) {
+                              sl
+                                  .get<SharedPrefsUtil>()
+                                  .setSeedBackedUp(true)
+                                  .then((result) {
+                                Navigator.pushNamed(
+                                    context, '/intro_password_on_launch',
+                                    arguments: _seedInputController.text);
+                              });
                             } else {
-                              // mnemonic mode
-                              _mnemonicFocusNode.unfocus();
-                              if (NanoMnemomics.validateMnemonic(
-                                  _mnemonicController.text.split(' '))) {
-                                sl
-                                    .get<SharedPrefsUtil>()
-                                    .setSeedBackedUp(true)
-                                    .then((result) {
-                                  Navigator.pushNamed(
-                                      context, '/intro_password_on_launch',
-                                      arguments:
-                                          NanoMnemomics.mnemonicListToSeed(
-                                              _mnemonicController.text
-                                                  .split(' ')));
+                              // Display error
+                              setState(() {
+                                _showSeedError = true;
+                              });
+                            }
+                          } else {
+                            // mnemonic mode
+                            _mnemonicFocusNode.unfocus();
+                            if (NanoMnemomics.validateMnemonic(
+                                _mnemonicController.text.split(' '))) {
+                              sl
+                                  .get<SharedPrefsUtil>()
+                                  .setSeedBackedUp(true)
+                                  .then((result) {
+                                Navigator.pushNamed(
+                                    context, '/intro_password_on_launch',
+                                    arguments:
+                                        NanoMnemomics.mnemonicListToSeed(
+                                            _mnemonicController.text
+                                                .split(' ')));
+                              });
+                            } else {
+                              // Show mnemonic error
+                              if (_mnemonicController.text
+                                      .split(' ')
+                                      .length !=
+                                  24) {
+                                setState(() {
+                                  _mnemonicIsValid = false;
+                                  _mnemonicError = AppLocalization.of(context)
+                                      .mnemonicSizeError;
                                 });
                               } else {
-                                // Show mnemonic error
-                                if (_mnemonicController.text
-                                        .split(' ')
-                                        .length !=
-                                    24) {
-                                  setState(() {
-                                    _mnemonicIsValid = false;
-                                    _mnemonicError = AppLocalization.of(context)
-                                        .mnemonicSizeError;
-                                  });
-                                } else {
-                                  _mnemonicController.text
-                                      .split(' ')
-                                      .forEach((word) {
-                                    if (!NanoMnemomics.isValidWord(word)) {
-                                      setState(() {
-                                        _mnemonicIsValid = false;
-                                        _mnemonicError =
-                                            AppLocalization.of(context)
-                                                .mnemonicInvalidWord
-                                                .replaceAll("%1", word);
-                                      });
-                                    }
-                                  });
-                                }
+                                _mnemonicController.text
+                                    .split(' ')
+                                    .forEach((word) {
+                                  if (!NanoMnemomics.isValidWord(word)) {
+                                    setState(() {
+                                      _mnemonicIsValid = false;
+                                      _mnemonicError =
+                                          AppLocalization.of(context)
+                                              .mnemonicInvalidWord
+                                              .replaceAll("%1", word);
+                                    });
+                                  }
+                                });
                               }
                             }
-                          },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0)),
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(AppIcons.forward,
-                              color:
-                                  StateContainer.of(context).curTheme.primary,
-                              size: 50)),
+                          }
+                        },
+                        child: Icon(AppIcons.forward,
+                            color:
+                                StateContainer.of(context).curTheme.primary,
+                            size: 50),
+                      ),
                     ),
                   ],
                 ),

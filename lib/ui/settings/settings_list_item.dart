@@ -17,13 +17,27 @@ class AppSettings {
       {bool disabled = false}) {
     return IgnorePointer(
       ignoring: disabled,
-      child: FlatButton(
-        highlightColor: StateContainer.of(context).curTheme.text15,
-        splashColor: StateContainer.of(context).curTheme.text15,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.all(0.0),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+          ),
+        ).copyWith(
+          overlayColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.focused))
+                return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.hovered))
+                return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.pressed))
+                return StateContainer.of(context).curTheme.text15;
+              return null;
+          }),
+        ),
         onPressed: () {
           onPressed();
         },
-        padding: EdgeInsets.all(0.0),
         child: Container(
           height: 60.0,
           margin: EdgeInsetsDirectional.only(start: 30.0),
@@ -88,13 +102,24 @@ class AppSettings {
       {bool disabled = false}) {
     return IgnorePointer(
       ignoring: disabled,
-      child: FlatButton(
-        highlightColor: StateContainer.of(context).curTheme.text15,
-        splashColor: StateContainer.of(context).curTheme.text15,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.all(0.0),
+        ).copyWith(
+          overlayColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.focused))
+                return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.hovered))
+                return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.pressed))
+                return StateContainer.of(context).curTheme.text15;
+              return null;
+          }),
+        ),
         onPressed: () {
           onPressed();
         },
-        padding: EdgeInsets.all(0.0),
         child: Container(
           height: 60.0,
           margin: EdgeInsetsDirectional.only(start: 30.0),
@@ -153,9 +178,21 @@ class AppSettings {
   static Widget buildSettingsListItemSingleLine(
       BuildContext context, String heading, IconData settingIcon,
       {Function onPressed}) {
-    return FlatButton(
-      highlightColor: StateContainer.of(context).curTheme.text15,
-      splashColor: StateContainer.of(context).curTheme.text15,
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.all(0.0),
+      ).copyWith(
+        overlayColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused))
+              return StateContainer.of(context).curTheme.text15;
+            if (states.contains(MaterialState.hovered))
+              return StateContainer.of(context).curTheme.text15;
+            if (states.contains(MaterialState.pressed))
+              return StateContainer.of(context).curTheme.text15;
+            return null;
+        }),
+      ),
       onPressed: () {
         if (onPressed != null) {
           onPressed();
@@ -163,7 +200,6 @@ class AppSettings {
           return;
         }
       },
-      padding: EdgeInsets.all(0.0),
       child: Container(
         height: 60.0,
         margin: EdgeInsetsDirectional.only(start: 30.0),
