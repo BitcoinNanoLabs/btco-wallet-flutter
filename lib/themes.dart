@@ -126,6 +126,11 @@ class InfinitumTheme extends BaseTheme {
   Color overlay30 = black.withOpacity(0.3);
   Color overlay20 = black.withOpacity(0.2);
 
+  Color barrier = black.withOpacity(0.7);
+  Color barrierWeaker = black.withOpacity(0.4);
+  Color barrierWeakest = black.withOpacity(0.3);
+  Color barrierStronger = black.withOpacity(0.85);
+
   Color animationOverlayMedium = black.withOpacity(0.7);
   Color animationOverlayStrong = black.withOpacity(0.85);
 
