@@ -20,9 +20,11 @@ dependencies:
   # Securley store data in a keystore
   flutter_secure_storage: ^5.0.2
 
-  # Nano core functions
+   # Nano core functions
   flutter_nano_ffi:
-    path: ../appditto/flutter_nano_ffi
+    git:
+      url: https://github.com/bitcoinnanolabs/flutter_nano_ffi.git
+      ref: main
 
   # Shared prefs
   shared_preferences: ^2.0.8
@@ -83,7 +85,7 @@ dependencies:
       ref: master
 
   # File picker
-  file_picker: ^3.0.0-nullsafety.0
+  file_picker: ^5.2.6
 
   # Deep link support
   #uni_links: ^0.2.0

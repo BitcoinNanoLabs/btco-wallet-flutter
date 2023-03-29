@@ -65,31 +65,39 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             height: 50,
                             width: 50,
                             child: TextButton(
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.all(0.0),
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                                ),
-                              ).copyWith(
-                                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsets.all(0.0),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50.0)),
+                                  ),
+                                ).copyWith(
+                                  overlayColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                          (Set<MaterialState> states) {
                                     if (states.contains(MaterialState.focused))
-                                      return StateContainer.of(context).curTheme.text15;
+                                      return StateContainer.of(context)
+                                          .curTheme
+                                          .text15;
                                     if (states.contains(MaterialState.hovered))
-                                        return StateContainer.of(context).curTheme.text15;
+                                      return StateContainer.of(context)
+                                          .curTheme
+                                          .text15;
                                     if (states.contains(MaterialState.pressed))
-                                        return StateContainer.of(context).curTheme.text15;
+                                      return StateContainer.of(context)
+                                          .curTheme
+                                          .text15;
                                     return null;
-                                }),
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Icon(AppIcons.back,
+                                  }),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(AppIcons.back,
                                     color: StateContainer.of(context)
                                         .curTheme
                                         .text,
-                                size: 24)),
+                                    size: 24)),
                           ),
                           // Switch between Secret Phrase and Seed
                           Container(
@@ -98,20 +106,28 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 padding: EdgeInsetsDirectional.only(
-                                  top: 6, bottom: 6, start: 12, end: 12),
+                                    top: 6, bottom: 6, start: 12, end: 12),
                                 shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0)),
                                 ),
                               ).copyWith(
-                                overlayColor: MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (states.contains(MaterialState.focused))
-                                      return StateContainer.of(context).curTheme.text15;
-                                    if (states.contains(MaterialState.hovered))
-                                        return StateContainer.of(context).curTheme.text15;
-                                    if (states.contains(MaterialState.pressed))
-                                        return StateContainer.of(context).curTheme.text15;
-                                    return null;
+                                overlayColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.focused))
+                                    return StateContainer.of(context)
+                                        .curTheme
+                                        .text15;
+                                  if (states.contains(MaterialState.hovered))
+                                    return StateContainer.of(context)
+                                        .curTheme
+                                        .text15;
+                                  if (states.contains(MaterialState.pressed))
+                                    return StateContainer.of(context)
+                                        .curTheme
+                                        .text15;
+                                  return null;
                                 }),
                               ),
                               onPressed: () {
@@ -343,8 +359,8 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                             inputFormatters: [
                                               SingleSpaceInputFormatter(),
                                               LowerCaseTextFormatter(),
-                                              FilteringTextInputFormatter(
-                                                  RegExp("[a-zA-Z ]")),
+                                              FilteringTextInputFormatter.allow(
+                                                  RegExp(r'[0-9]')),
                                             ],
                                             textInputAction:
                                                 TextInputAction.done,
@@ -566,18 +582,26 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.all(0.0),
                           shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
                           ),
                         ).copyWith(
-                          overlayColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.focused))
-                                return StateContainer.of(context).curTheme.primary15;
-                              if (states.contains(MaterialState.hovered))
-                                  return StateContainer.of(context).curTheme.primary15;
-                              if (states.contains(MaterialState.pressed))
-                                  return StateContainer.of(context).curTheme.primary30;
-                              return null;
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.focused))
+                              return StateContainer.of(context)
+                                  .curTheme
+                                  .primary15;
+                            if (states.contains(MaterialState.hovered))
+                              return StateContainer.of(context)
+                                  .curTheme
+                                  .primary15;
+                            if (states.contains(MaterialState.pressed))
+                              return StateContainer.of(context)
+                                  .curTheme
+                                  .primary30;
+                            return null;
                           }),
                         ),
                         onPressed: () {
@@ -611,16 +635,12 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                                   .then((result) {
                                 Navigator.pushNamed(
                                     context, '/intro_password_on_launch',
-                                    arguments:
-                                        NanoMnemomics.mnemonicListToSeed(
-                                            _mnemonicController.text
-                                                .split(' ')));
+                                    arguments: NanoMnemomics.mnemonicListToSeed(
+                                        _mnemonicController.text.split(' ')));
                               });
                             } else {
                               // Show mnemonic error
-                              if (_mnemonicController.text
-                                      .split(' ')
-                                      .length !=
+                              if (_mnemonicController.text.split(' ').length !=
                                   24) {
                                 setState(() {
                                   _mnemonicIsValid = false;
@@ -646,8 +666,7 @@ class _IntroImportSeedState extends State<IntroImportSeedPage> {
                           }
                         },
                         child: Icon(AppIcons.forward,
-                            color:
-                                StateContainer.of(context).curTheme.primary,
+                            color: StateContainer.of(context).curTheme.primary,
                             size: 50),
                       ),
                     ),

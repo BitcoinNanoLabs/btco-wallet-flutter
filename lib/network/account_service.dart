@@ -37,18 +37,9 @@ import 'package:natrium_wallet_flutter/network/model/response/pending_response.d
 import 'package:natrium_wallet_flutter/network/model/response/process_response.dart';
 import 'package:natrium_wallet_flutter/bus/events.dart';
 
-// Server Connection String
-//const String _SERVER_ADDRESS = "wss://testapp.natrium.io";
-//const String _SERVER_ADDRESS_HTTP = "https://testapp.natrium.io/api";
-//const String _SERVER_ADDRESS_ALERTS = "https://testapp.natrium.io/alerts";
-
-const String _SERVER_ADDRESS = "ws://177.234.166.120:3000";
-const String _SERVER_ADDRESS_HTTP = "http://177.234.166.120:3000/api";
-const String _SERVER_ADDRESS_ALERTS = "http://177.234.166.120:3000/alerts";
-
-//const String _SERVER_ADDRESS = "wss://207.244.255.183:5076/";
-//const String _SERVER_ADDRESS_HTTP = "http://207.244.255.183:5076/api";
-//const String _SERVER_ADDRESS_ALERTS = "http://207.244.255.183:5076/alerts";
+const String _SERVER_ADDRESS = "wss://wallet.bitcoinnano.org";
+const String _SERVER_ADDRESS_HTTP = "https://wallet.bitcoinnano.org/api";
+const String _SERVER_ADDRESS_ALERTS = "https://wallet.bitcoinnano.org/alerts";
 
 Map decodeJson(dynamic src) {
   return json.decode(src);
