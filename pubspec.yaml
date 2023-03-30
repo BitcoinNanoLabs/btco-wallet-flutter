@@ -147,6 +147,8 @@ dependencies:
 
   devicelocale: ^0.4.1
 
+  rive: ^0.10.3
+
 dependency_overrides:
   analyzer: ^2.7.0
   dart_style: ^2.0.0
@@ -202,6 +204,7 @@ flutter:
   assets:
     - assets/QR.svg
     - assets/welcome_animation.flr
+    - assets/welcome_animation.riv
     - assets/send_animation.flr
     - assets/manta_animation.flr
     - assets/transfer_animation_natriumwalletonly.flr

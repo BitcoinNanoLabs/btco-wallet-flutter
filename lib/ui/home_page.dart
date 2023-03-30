@@ -1991,6 +1991,9 @@ class _AppHomePageState extends State<AppHomePage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          Icon(AppIcons.nanologo,
+                            size: 14,
+                            color: StateContainer.of(context).curTheme.primary),
                           Container(
                             constraints: BoxConstraints(
                                 maxWidth:
@@ -2000,8 +2003,8 @@ class _AppHomePageState extends State<AppHomePage>
                                 children: [
                                   // Main balance text
                                   TextSpan(
-                                    text: "Ӿ" +
-                                        StateContainer.of(context)
+                                    text: " " +
+                                      StateContainer.of(context)
                                             .wallet
                                             .getAccountBalanceDisplay(),
                                     style: _priceConversion ==

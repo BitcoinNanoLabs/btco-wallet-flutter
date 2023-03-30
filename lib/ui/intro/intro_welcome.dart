@@ -5,7 +5,7 @@ import 'package:natrium_wallet_flutter/dimens.dart';
 import 'package:natrium_wallet_flutter/styles.dart';
 import 'package:natrium_wallet_flutter/localization.dart';
 import 'package:natrium_wallet_flutter/ui/widgets/buttons.dart';
-import 'package:flare_flutter/flare_actor.dart';
+import 'package:rive/rive.dart';
 
 class IntroWelcomePage extends StatefulWidget {
   @override
@@ -40,14 +40,7 @@ class _IntroWelcomePageState extends State<IntroWelcomePage> {
                           width: double.infinity,
                           height: MediaQuery.of(context).size.width * 5 / 8,
                           child: Center(
-                            child: FlareActor(
-                              "assets/welcome_animation.flr",
-                              animation: "main",
-                              fit: BoxFit.contain,
-                              color: StateContainer.of(context)
-                                  .curTheme
-                                  .primary,
-                            ),
+                            child: RiveAnimation.asset("assets/welcome_animation.riv"),
                           ),
                         ),
                         //Container for the paragraph

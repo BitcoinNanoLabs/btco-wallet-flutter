@@ -31,24 +31,18 @@ class AppButton {
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: TextButton(
               style: TextButton.styleFrom(
-                padding: EdgeInsets.all(0.0),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
-                primary: disabled
-                  ? StateContainer.of(context).curTheme.primary60
-                  : StateContainer.of(context).curTheme.primary,
               ).copyWith(
-                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.focused))
-                      return StateContainer.of(context).curTheme.background40;
-                    if (states.contains(MaterialState.hovered))
-                        return StateContainer.of(context).curTheme.background40;
-                    if (states.contains(MaterialState.pressed))
-                        return StateContainer.of(context).curTheme.background40;
-                    return null;
-                }),
+                    if (states.contains(MaterialState.disabled)) {
+                      return StateContainer.of(context).curTheme.primary60;
+                    }
+                    return StateContainer.of(context).curTheme.primary;
+                  },
+                ),
               ),
               onPressed: () {
                 if (onPressed != null && !disabled) {
@@ -122,11 +116,11 @@ class AppButton {
                 dimens[0], dimens[1], dimens[2], dimens[3]),
             child: TextButton(
               style: TextButton.styleFrom(
+                foregroundColor: StateContainer.of(context).curTheme.success,
                 padding: EdgeInsets.all(0.0),
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
-                primary: StateContainer.of(context).curTheme.success,
               ).copyWith(
                 overlayColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
