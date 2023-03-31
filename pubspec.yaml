@@ -6,7 +6,7 @@ description: BTCOW - Fast, Robust & Secure Infinitum Wallet.
 # followed by an optional build number separated by a +.
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
-version: 2.4.5+93
+version: 2.6.1+96
 
 environment:
   sdk: ">=2.11.99 <3.0.0"
@@ -20,11 +20,9 @@ dependencies:
   # Securley store data in a keystore
   flutter_secure_storage: ^5.0.2
 
-   # Nano core functions
+  # Nano core functions
   flutter_nano_ffi:
-    git:
-      url: https://github.com/bitcoinnanolabs/flutter_nano_ffi.git
-      ref: main
+    path: ../appditto/flutter_nano_ffi
 
   # Shared prefs
   shared_preferences: ^2.0.8

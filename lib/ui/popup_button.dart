@@ -229,14 +229,18 @@ class _AppPopupButtonState extends State<AppPopupButton> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(100.0)),
                 ),
-                primary: StateContainer.of(context).wallet != null &&
+              ).copyWith(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    return StateContainer.of(context).wallet != null &&
                       StateContainer.of(context).wallet.accountBalance >
                           BigInt.zero
-                  ? isSendButtonColorPrimary
-                      ? StateContainer.of(context).curTheme.primary
-                      : StateContainer.of(context).curTheme.success
-                  : StateContainer.of(context).curTheme.primary60,
-              ).copyWith(
+                      ? isSendButtonColorPrimary
+                          ? StateContainer.of(context).curTheme.primary
+                          : StateContainer.of(context).curTheme.success
+                      : StateContainer.of(context).curTheme.primary60;
+                  },
+                ),
                 overlayColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
                     if (states.contains(MaterialState.focused))

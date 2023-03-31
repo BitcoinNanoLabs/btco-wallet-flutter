@@ -944,14 +944,20 @@ class _AppHomePageState extends State<AppHomePage>
                             start: 14, top: 0.0, end: 7.0),
                         child: TextButton(
                           style: TextButton.styleFrom(
-                            padding: EdgeInsets.all(0.0),
+                            foregroundColor: receive != null
+                              ? StateContainer.of(context).curTheme.primary
+                              : StateContainer.of(context).curTheme.primary60, padding: EdgeInsets.all(0.0),
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(100.0)),
                             ),
-                            primary: receive != null
-                              ? StateContainer.of(context).curTheme.primary
-                              : StateContainer.of(context).curTheme.primary60,
                           ).copyWith(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                return receive != null
+                                ? StateContainer.of(context).curTheme.primary
+                                : StateContainer.of(context).curTheme.primary60;
+                              },
+                            ),
                             overlayColor: MaterialStateProperty.resolveWith<Color>(
                               (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.focused))
@@ -1108,8 +1114,12 @@ class _AppHomePageState extends State<AppHomePage>
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
-              primary: StateContainer.of(context).curTheme.backgroundDark,
             ).copyWith(
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  return StateContainer.of(context).curTheme.backgroundDark;
+                },
+              ),
               overlayColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
                   if (states.contains(MaterialState.focused))
@@ -1240,8 +1250,12 @@ class _AppHomePageState extends State<AppHomePage>
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
-          primary: StateContainer.of(context).curTheme.backgroundDark,
         ).copyWith(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return StateContainer.of(context).curTheme.backgroundDark;
+            },
+          ),
           overlayColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.focused))
@@ -1430,8 +1444,12 @@ class _AppHomePageState extends State<AppHomePage>
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
-          primary: StateContainer.of(context).curTheme.backgroundDark,
         ).copyWith(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return StateContainer.of(context).curTheme.backgroundDark;
+            },
+          ),
           overlayColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.focused))
