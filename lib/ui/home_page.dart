@@ -1169,7 +1169,16 @@ class _AppHomePageState extends State<AppHomePage>
                                   text: '',
                                   children: [
                                     TextSpan(
-                                      text: "Ӿ" + item.getFormattedAmount(),
+                                      text: "",
+                                      style: TextStyle(
+                                        fontFamily: "AppIcons",
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .primary60,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: item.getFormattedAmount(),
                                       style:
                                           AppStyles.textStyleTransactionAmount(
                                         context,

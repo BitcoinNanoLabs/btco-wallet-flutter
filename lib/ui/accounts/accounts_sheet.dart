@@ -544,10 +544,18 @@ class _AppAccountsWidgetState extends State<AppAccountsWidget> {
                                 children: [
                                   // Main balance text
                                   TextSpan(
-                                    text: (account.balance != null
-                                            ? "Ӿ"
-                                            : "") +
-                                        (account.balance != null &&
+                                    text: (account.balance != null ? "" : ""),
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontFamily: "AppIcons",
+                                      fontWeight: FontWeight.w900,
+                                      color: StateContainer.of(context)
+                                          .curTheme
+                                          .text,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: (account.balance != null &&
                                                 !account.selected
                                             ? NumberUtil.getRawAsUsableString(
                                                 account.balance)

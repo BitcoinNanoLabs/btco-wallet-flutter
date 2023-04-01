@@ -336,6 +336,20 @@ class _SendSheetState extends State<SendSheet> {
                                               ),
                                               TextSpan(
                                                 text: _localCurrencyMode
+                                                    ? ""
+                                                    : "",
+                                                style: TextStyle(
+                                                  color:
+                                                      StateContainer.of(context)
+                                                          .curTheme
+                                                          .primary60,
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'AppIcons',
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: _localCurrencyMode
                                                     ? StateContainer.of(context)
                                                         .wallet
                                                         .getLocalCurrencyPrice(
@@ -345,7 +359,7 @@ class _SendSheetState extends State<SendSheet> {
                                                             locale: StateContainer
                                                                     .of(context)
                                                                 .currencyLocale)
-                                                    : "Ӿ" + StateContainer.of(context)
+                                                    : StateContainer.of(context)
                                                         .wallet
                                                         .getAccountBalanceDisplay(),
                                                 style: TextStyle(
