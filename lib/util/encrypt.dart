@@ -4,9 +4,7 @@ import 'package:pointycastle/api.dart' show ParametersWithIV, KeyParameter;
 import 'package:pointycastle/stream/salsa20.dart';
 import 'package:flutter_nano_ffi/flutter_nano_ffi.dart';
 
-/**
- * Encryption using Salsa20 from pointycastle
- */
+/// Encryption using Salsa20 from pointycastle
 class Salsa20Encryptor {
   final String key;
   final String iv;

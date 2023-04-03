@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:math' as Math;
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:natrium_wallet_flutter/app_icons.dart';
 import 'package:natrium_wallet_flutter/themes.dart';
 import 'package:path_provider/path_provider.dart';
@@ -164,7 +162,7 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                         Center(
                           child: Container(
                             width: (StateContainer.of(context).curTheme
-                                    is IndiumTheme)
+                                    is NihoniumTheme)
                                 ? computedMaxSize / 1.05
                                 : computedMaxSize,
                             decoration: BoxDecoration(
@@ -188,11 +186,11 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                                     color: Colors.white,
                                     border: Border.all(
                                       width: (StateContainer.of(context)
-                                              .curTheme is IndiumTheme)
+                                              .curTheme is NihoniumTheme)
                                           ? computedMaxSize / 85
                                           : computedMaxSize / 110,
                                       color: (StateContainer.of(context)
-                                              .curTheme is IndiumTheme)
+                                              .curTheme is NihoniumTheme)
                                           ? StateContainer.of(context)
                                               .curTheme
                                               .backgroundDark
@@ -206,11 +204,11 @@ class _ReceiveSheetStateState extends State<ReceiveSheet> {
                                       shape: BoxShape.circle,
                                       border: Border.all(
                                         width: (StateContainer.of(context)
-                                                .curTheme is IndiumTheme)
+                                                .curTheme is NihoniumTheme)
                                             ? computedMaxSize / 110
                                             : computedMaxSize / 85,
                                         color: (StateContainer.of(context)
-                                                .curTheme is IndiumTheme)
+                                                .curTheme is NihoniumTheme)
                                             ? StateContainer.of(context)
                                                 .curTheme
                                                 .primary

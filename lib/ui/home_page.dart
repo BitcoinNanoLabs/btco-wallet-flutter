@@ -13,7 +13,6 @@ import 'package:manta_dart/manta_wallet.dart';
 import 'package:manta_dart/messages.dart';
 import 'package:natrium_wallet_flutter/model/db/account.dart';
 import 'package:natrium_wallet_flutter/network/model/response/alerts_response_item.dart';
-import 'package:natrium_wallet_flutter/network/model/response/subscribe_response.dart';
 import 'package:natrium_wallet_flutter/ui/popup_button.dart';
 import 'package:natrium_wallet_flutter/appstate_container.dart';
 import 'package:natrium_wallet_flutter/dimens.dart';
@@ -87,7 +86,7 @@ class _AppHomePageState extends State<AppHomePage>
   // List of contacts (Store it so we only have to query the DB once for transaction cards)
   List<Contact> _contacts = List();
 
-  // Price conversion state (BTC, NANO, NONE)
+  // Price conversion state (BTC, BTCO, NONE)
   PriceConversion _priceConversion;
 
   bool _isRefreshing = false;
@@ -279,20 +278,20 @@ class _AppHomePageState extends State<AppHomePage>
     bool contactAdded = await sl.get<SharedPrefsUtil>().getFirstContactAdded();
     if (!contactAdded) {
       bool addressExists = await sl.get<DBHelper>().contactExistsWithAddress(
-          "nano_1natrium1o3z5519ifou7xii8crpxpk8y65qmkih8e8bpsjri651oza8imdd");
+          "btco_1p473uf1g3dii6imtg5mdj1ond3xi6ffungn18n8uyrrunjqtgjufg7hrc8y");
       if (addressExists) {
         return;
       }
       bool nameExists =
-          await sl.get<DBHelper>().contactExistsWithName("@NatriumDonations");
+          await sl.get<DBHelper>().contactExistsWithName("@BitcoinNanoDonations");
       if (nameExists) {
         return;
       }
       await sl.get<SharedPrefsUtil>().setFirstContactAdded(true);
       Contact c = Contact(
-          name: "@NatriumDonations",
+          name: "@BitcoinNanoDonations",
           address:
-              "nano_1natrium1o3z5519ifou7xii8crpxpk8y65qmkih8e8bpsjri651oza8imdd");
+              "btco_1p473uf1g3dii6imtg5mdj1ond3xi6ffungn18n8uyrrunjqtgjufg7hrc8y");
       await sl.get<DBHelper>().saveContact(c);
     }
   }
@@ -532,7 +531,8 @@ class _AppHomePageState extends State<AppHomePage>
       if (contact.address ==
           _historyListMap[StateContainer.of(context).wallet.address][localIndex]
               .account
-              .replaceAll("xrb_", "nano_")) {
+              .replaceAll("xrb_", "nano_")
+              .replaceAll("nano_", "btco_")) {
         displayName = contact.name;
       }
     });
@@ -942,18 +942,38 @@ class _AppHomePageState extends State<AppHomePage>
                         width: (MediaQuery.of(context).size.width - 42) / 2,
                         margin: EdgeInsetsDirectional.only(
                             start: 14, top: 0.0, end: 7.0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100.0)),
-                          color: receive != null
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: receive != null
                               ? StateContainer.of(context).curTheme.primary
-                              : StateContainer.of(context).curTheme.primary60,
-                          child: AutoSizeText(
-                            AppLocalization.of(context).receive,
-                            textAlign: TextAlign.center,
-                            style: AppStyles.textStyleButtonPrimary(context),
-                            maxLines: 1,
-                            stepGranularity: 0.5,
+                              : StateContainer.of(context).curTheme.primary60, padding: EdgeInsets.all(0.0),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                            ),
+                          ).copyWith(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                return receive != null
+                                ? StateContainer.of(context).curTheme.primary
+                                : StateContainer.of(context).curTheme.primary60;
+                              },
+                            ),
+                            overlayColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.focused))
+                                  return receive != null
+                                    ? StateContainer.of(context).curTheme.background40
+                                    : Colors.transparent;
+                                if (states.contains(MaterialState.hovered))
+                                  return receive != null
+                                    ? StateContainer.of(context).curTheme.background40
+                                    : Colors.transparent;
+                                if (states.contains(MaterialState.pressed))
+                                  return receive != null
+                                    ? StateContainer.of(context).curTheme.background40
+                                    : Colors.transparent;
+                                return null;
+                            }),
                           ),
                           onPressed: () {
                             if (receive == null) {
@@ -962,12 +982,13 @@ class _AppHomePageState extends State<AppHomePage>
                             Sheets.showAppHeightEightSheet(
                                 context: context, widget: receive);
                           },
-                          highlightColor: receive != null
-                              ? StateContainer.of(context).curTheme.background40
-                              : Colors.transparent,
-                          splashColor: receive != null
-                              ? StateContainer.of(context).curTheme.background40
-                              : Colors.transparent,
+                          child: AutoSizeText(
+                            AppLocalization.of(context).receive,
+                            textAlign: TextAlign.center,
+                            style: AppStyles.textStyleButtonPrimary(context),
+                            maxLines: 1,
+                            stepGranularity: 0.5,
+                          ),
                         ),
                       ),
                       AppPopupButton(),
@@ -1087,13 +1108,29 @@ class _AppHomePageState extends State<AppHomePage>
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [StateContainer.of(context).curTheme.boxShadow],
           ),
-          child: FlatButton(
-            highlightColor: StateContainer.of(context).curTheme.text15,
-            splashColor: StateContainer.of(context).curTheme.text15,
-            color: StateContainer.of(context).curTheme.backgroundDark,
-            padding: EdgeInsets.all(0.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.all(0.0),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              ),
+            ).copyWith(
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  return StateContainer.of(context).curTheme.backgroundDark;
+                },
+              ),
+              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.focused))
+                    return StateContainer.of(context).curTheme.text15;
+                  if (states.contains(MaterialState.hovered))
+                      return StateContainer.of(context).curTheme.text15;
+                  if (states.contains(MaterialState.pressed))
+                      return StateContainer.of(context).curTheme.text15;
+                  return null;
+              }),
+            ),
             onPressed: () {
               Sheets.showAppHeightEightSheet(
                   context: context,
@@ -1132,7 +1169,16 @@ class _AppHomePageState extends State<AppHomePage>
                                   text: '',
                                   children: [
                                     TextSpan(
-                                      text: "Ӿ" + item.getFormattedAmount(),
+                                      text: "",
+                                      style: TextStyle(
+                                        fontFamily: "AppIcons",
+                                        color: StateContainer.of(context)
+                                            .curTheme
+                                            .primary60,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: item.getFormattedAmount(),
                                       style:
                                           AppStyles.textStyleTransactionAmount(
                                         context,
@@ -1207,16 +1253,32 @@ class _AppHomePageState extends State<AppHomePage>
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [StateContainer.of(context).curTheme.boxShadow],
       ),
-      child: FlatButton(
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.all(0.0),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+        ).copyWith(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return StateContainer.of(context).curTheme.backgroundDark;
+            },
+          ),
+          overlayColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.focused))
+                return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.hovered))
+                  return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.pressed))
+                  return StateContainer.of(context).curTheme.text15;
+              return null;
+          }),
+        ),
         onPressed: () {
           return null;
         },
-        highlightColor: StateContainer.of(context).curTheme.text15,
-        splashColor: StateContainer.of(context).curTheme.text15,
-        color: StateContainer.of(context).curTheme.backgroundDark,
-        padding: EdgeInsets.all(0.0),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Center(
           child: Padding(
             padding:
@@ -1283,14 +1345,14 @@ class _AppHomePageState extends State<AppHomePage>
     } else {
       workingStr = AppLocalization.of(context).newAccountIntro;
     }
-    if (!workingStr.contains("NANO")) {
+    if (!workingStr.contains("BTCO")) {
       return TextSpan(
         text: workingStr,
         style: AppStyles.textStyleTransactionWelcome(context),
       );
     }
-    // Colorize NANO
-    List<String> splitStr = workingStr.split("NANO");
+    // Colorize BTCO
+    List<String> splitStr = workingStr.split("BTCO");
     if (splitStr.length != 2) {
       return TextSpan(
         text: workingStr,
@@ -1305,7 +1367,7 @@ class _AppHomePageState extends State<AppHomePage>
           style: AppStyles.textStyleTransactionWelcome(context),
         ),
         TextSpan(
-          text: "NANO",
+          text: "BTCO",
           style: AppStyles.textStyleTransactionWelcomePrimary(context),
         ),
         TextSpan(
@@ -1385,16 +1447,32 @@ class _AppHomePageState extends State<AppHomePage>
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [StateContainer.of(context).curTheme.boxShadow],
       ),
-      child: FlatButton(
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.all(0.0),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+        ).copyWith(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return StateContainer.of(context).curTheme.backgroundDark;
+            },
+          ),
+          overlayColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.focused))
+                return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.hovered))
+                  return StateContainer.of(context).curTheme.text15;
+              if (states.contains(MaterialState.pressed))
+                  return StateContainer.of(context).curTheme.text15;
+              return null;
+          }),
+        ),
         onPressed: () {
           return null;
         },
-        highlightColor: StateContainer.of(context).curTheme.text15,
-        splashColor: StateContainer.of(context).curTheme.text15,
-        color: StateContainer.of(context).curTheme.backgroundDark,
-        padding: EdgeInsets.all(0.0),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Center(
           child: Padding(
             padding:
@@ -1581,15 +1659,27 @@ class _AppHomePageState extends State<AppHomePage>
                   top: settingsIconMarginTop, start: 5),
               height: 50,
               width: 50,
-              child: FlatButton(
-                highlightColor: StateContainer.of(context).curTheme.text15,
-                splashColor: StateContainer.of(context).curTheme.text15,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.all(0.0),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  ),
+                ).copyWith(
+                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.focused))
+                        return StateContainer.of(context).curTheme.text15;
+                      if (states.contains(MaterialState.hovered))
+                          return StateContainer.of(context).curTheme.text15;
+                      if (states.contains(MaterialState.pressed))
+                          return StateContainer.of(context).curTheme.text15;
+                      return null;
+                  }),
+                ),
                 onPressed: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0)),
-                padding: EdgeInsets.all(0.0),
                 child: Stack(
                   children: [
                     Icon(
@@ -1693,17 +1783,27 @@ class _AppHomePageState extends State<AppHomePage>
                       Center(
                         child: Container(
                           color: Colors.transparent,
-                          child: FlatButton(
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(0.0),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                              ),
+                            ).copyWith(
+                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.focused))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.hovered))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.pressed))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  return null;
+                              }),
+                            ),
                             onPressed: () {
                               Navigator.of(context).pushNamed('/avatar_page');
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100.0)),
-                            highlightColor:
-                                StateContainer.of(context).curTheme.text15,
-                            splashColor:
-                                StateContainer.of(context).curTheme.text15,
-                            padding: EdgeInsets.all(0.0),
                             child: Container(
                               color: Colors.transparent,
                             ),
@@ -1918,6 +2018,9 @@ class _AppHomePageState extends State<AppHomePage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          Icon(AppIcons.nanologo,
+                            size: 14,
+                            color: StateContainer.of(context).curTheme.primary),
                           Container(
                             constraints: BoxConstraints(
                                 maxWidth:
@@ -1927,8 +2030,8 @@ class _AppHomePageState extends State<AppHomePage>
                                 children: [
                                   // Main balance text
                                   TextSpan(
-                                    text: "Ӿ" +
-                                        StateContainer.of(context)
+                                    text: " " +
+                                      StateContainer.of(context)
                                             .wallet
                                             .getAccountBalanceDisplay(),
                                     style: _priceConversion ==
@@ -1964,7 +2067,7 @@ class _AppHomePageState extends State<AppHomePage>
                               Icon(
                                   _priceConversion == PriceConversion.BTC
                                       ? AppIcons.btc
-                                      : AppIcons.nanocurrency,
+                                      : AppIcons.nanohorizontal,
                                   color:
                                       _priceConversion == PriceConversion.NONE
                                           ? Colors.transparent
@@ -2070,31 +2173,42 @@ class _TransactionDetailsSheetState extends State<TransactionDetailsSheet> {
                             width: 55,
                             // Add Contact Button
                             child: !widget.displayName.startsWith("@")
-                                ? FlatButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
+                                ? TextButton(
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 10),
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                                    ),
+                                  ).copyWith(
+                                    overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                        if (states.contains(MaterialState.focused))
+                                          return Colors.transparent;
+                                        if (states.contains(MaterialState.hovered))
+                                            return Colors.transparent;
+                                        if (states.contains(MaterialState.pressed))
+                                            return Colors.transparent;
+                                        return null;
+                                    }),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
                                       Sheets.showAppHeightNineSheet(
                                           context: context,
                                           widget: AddContactSheet(
                                               address: widget.address));
-                                    },
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100.0)),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10.0, horizontal: 10),
-                                    child: Icon(AppIcons.addcontact,
-                                        size: 35,
-                                        color: _addressCopied
-                                            ? StateContainer.of(context)
-                                                .curTheme
-                                                .successDark
-                                            : StateContainer.of(context)
-                                                .curTheme
-                                                .backgroundDark),
-                                  )
+                                  },
+                                  child: Icon(AppIcons.addcontact,
+                                    size: 35,
+                                    color: _addressCopied
+                                        ? StateContainer.of(context)
+                                            .curTheme
+                                            .successDark
+                                        : StateContainer.of(context)
+                                            .curTheme
+                                            .backgroundDark),
+                                )
                                 : SizedBox(),
                           ),
                         ),

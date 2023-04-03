@@ -66,7 +66,7 @@ class SharedPrefsUtil {
 
   Future<dynamic> get(String key, {dynamic defaultValue}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return await sharedPreferences.get(key) ?? defaultValue;
+    return sharedPreferences.get(key) ?? defaultValue;
   }
 
   /// Set a key with an expiry, expiry is in seconds
@@ -227,12 +227,12 @@ class SharedPrefsUtil {
 
   Future<AvailableBlockExplorer> getBlockExplorer() async {
     return AvailableBlockExplorer(AvailableBlockExplorerEnum.values[await get(cur_explorer,
-        defaultValue: AvailableBlockExplorerEnum.NANOCRAWLER.index)]);
+        defaultValue: AvailableBlockExplorerEnum.BTCOBLOCK.index)]);
   }
 
   Future<ThemeSetting> getTheme() async {
     return ThemeSetting(ThemeOptions.values[
-        await get(cur_theme, defaultValue: ThemeOptions.NATRIUM.index)]);
+        await get(cur_theme, defaultValue: ThemeOptions.INFINITUM.index)]);
   }
 
   Future<void> setRepresentative(String rep) async {

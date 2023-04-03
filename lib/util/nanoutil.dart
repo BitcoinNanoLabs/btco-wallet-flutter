@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_nano_ffi/flutter_nano_ffi.dart';
 
 import 'package:natrium_wallet_flutter/model/db/appdb.dart';
@@ -14,7 +13,7 @@ class NanoUtil {
   }
 
   static String seedToAddress(String seed, int index) {
-    return NanoAccounts.createAccount(NanoAccountType.NANO, NanoKeys.createPublicKey(seedToPrivate(seed, index)));
+    return NanoAccounts.createAccount(NanoAccountType.BTCO, NanoKeys.createPublicKey(seedToPrivate(seed, index)));
   }
 
   Future<void> loginAccount(String seed, BuildContext context) async {

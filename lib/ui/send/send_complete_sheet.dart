@@ -44,7 +44,7 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
               .toStringAsFixed(6) +
           "~";
     }
-    destinationAltered = widget.destination.replaceAll("xrb_", "nano_");
+    destinationAltered = widget.destination.replaceAll("xrb_", "nano_").replaceAll("nano_", "btco_");
     isMantaTransaction = widget.paymentRequest != null;
   }
 
@@ -102,7 +102,18 @@ class _SendCompleteSheetState extends State<SendCompleteSheet> {
                         text: '',
                         children: [
                           TextSpan(
-                            text: "Ӿ$amount",
+                            text: "",
+                            style: TextStyle(
+                              color: StateContainer.of(context)
+                                  .curTheme
+                                  .success,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'AppIcons',
+                            ),
+                          ),
+                          TextSpan(
+                            text: "$amount",
                             style: TextStyle(
                               color: StateContainer.of(context)
                                   .curTheme

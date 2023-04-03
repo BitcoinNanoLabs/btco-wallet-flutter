@@ -39,8 +39,9 @@ class _AvatarChangePageState extends State<AvatarChangePage> {
   void initState() {
     super.initState();
     this.loading = true;
+    String addressToImg = widget.curAddress.replaceFirst('btco','nano');
     String url =
-        'https://natricon.com/api/v1/nano/nonce?address=${widget.curAddress}';
+        'https://natricon.com/api/v1/nano/nonce?address=$addressToImg';
     http.get(Uri.parse(url), headers: {}).then((response) {
       if (mounted) {
         if (response.statusCode != 200) {
@@ -107,22 +108,33 @@ class _AvatarChangePageState extends State<AvatarChangePage> {
                               start: smallScreen(context) ? 15 : 20),
                           height: 50,
                           width: 50,
-                          child: FlatButton(
-                              highlightColor:
-                                  StateContainer.of(context).curTheme.text15,
-                              splashColor:
-                                  StateContainer.of(context).curTheme.text15,
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .popUntil((route) => route.isFirst);
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0)),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
                               padding: EdgeInsets.all(0.0),
-                              child: Icon(AppIcons.back,
-                                  color:
-                                      StateContainer.of(context).curTheme.text,
-                                  size: 24)),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                              ),
+                            ).copyWith(
+                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.focused))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.hovered))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.pressed))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  return null;
+                              }),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
+                            },
+                            child: Icon(AppIcons.back,
+                              color:
+                                  StateContainer.of(context).curTheme.text,
+                              size: 24),
+                          )
                         ),
                       ],
                     ),
@@ -240,44 +252,54 @@ class _AvatarChangePageState extends State<AvatarChangePage> {
                                             .curTheme
                                             .primary20),
                               ),
-                              child: FlatButton(
-                                highlightColor:
-                                    StateContainer.of(context).curTheme.text15,
-                                splashColor:
-                                    StateContainer.of(context).curTheme.text15,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsetsDirectional.only(end: 4),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                                  ),
+                                ).copyWith(
+                                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.focused))
+                                        return StateContainer.of(context).curTheme.text15;
+                                      if (states.contains(MaterialState.hovered))
+                                          return StateContainer.of(context).curTheme.text15;
+                                      if (states.contains(MaterialState.pressed))
+                                          return StateContainer.of(context).curTheme.text15;
+                                      return null;
+                                  }),
+                                ),
                                 onPressed: nonce != null
-                                    ? () {
-                                        if (nonce == null || this.loading) {
-                                          return;
-                                        } else if (nonce == -1 ||
-                                            (nonce == 0 &&
-                                                currentNonce == -1)) {
-                                          setState(() {
-                                            nonce = null;
-                                          });
-                                        } else {
-                                          setState(() {
-                                            if (nonce - 1 == currentNonce) {
-                                              nonce -= 2;
-                                            } else {
-                                              nonce--;
-                                            }
-                                          });
-                                        }
+                                  ? () {
+                                      if (nonce == null || this.loading) {
+                                        return;
+                                      } else if (nonce == -1 ||
+                                          (nonce == 0 &&
+                                              currentNonce == -1)) {
+                                        setState(() {
+                                          nonce = null;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          if (nonce - 1 == currentNonce) {
+                                            nonce -= 2;
+                                          } else {
+                                            nonce--;
+                                          }
+                                        });
                                       }
-                                    : null,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0)),
-                                padding: EdgeInsetsDirectional.only(end: 4),
+                                    }
+                                  : null,
                                 child: Icon(AppIcons.back,
-                                    color: nonce != null && !this.loading
-                                        ? StateContainer.of(context)
-                                            .curTheme
-                                            .primary
-                                        : StateContainer.of(context)
-                                            .curTheme
-                                            .primary20,
-                                    size: 24),
+                                  color: nonce != null && !this.loading
+                                      ? StateContainer.of(context)
+                                          .curTheme
+                                          .primary
+                                      : StateContainer.of(context)
+                                          .curTheme
+                                          .primary20,
+                                  size: 24),
                               ),
                             ),
                             // Next Natricon Button
@@ -293,11 +315,24 @@ class _AvatarChangePageState extends State<AvatarChangePage> {
                                         .curTheme
                                         .primary),
                               ),
-                              child: FlatButton(
-                                highlightColor:
-                                    StateContainer.of(context).curTheme.text15,
-                                splashColor:
-                                    StateContainer.of(context).curTheme.text15,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: EdgeInsetsDirectional.only(start: 4),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                                  ),
+                                ).copyWith(
+                                  overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.focused))
+                                        return StateContainer.of(context).curTheme.text15;
+                                      if (states.contains(MaterialState.hovered))
+                                          return StateContainer.of(context).curTheme.text15;
+                                      if (states.contains(MaterialState.pressed))
+                                          return StateContainer.of(context).curTheme.text15;
+                                      return null;
+                                  }),
+                                ),
                                 onPressed: () {
                                   if (this.loading) {
                                     return;
@@ -315,9 +350,6 @@ class _AvatarChangePageState extends State<AvatarChangePage> {
                                     });
                                   }
                                 },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50.0)),
-                                padding: EdgeInsetsDirectional.only(start: 4),
                                 child: Transform(
                                   alignment: Alignment.center,
                                   transform: Matrix4.rotationY(math.pi),
@@ -327,7 +359,7 @@ class _AvatarChangePageState extends State<AvatarChangePage> {
                                           .primary,
                                       size: 24),
                                 ),
-                              ),
+                              )
                             ),
                           ],
                         ),

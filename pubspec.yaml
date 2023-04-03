@@ -1,12 +1,12 @@
 name: natrium_wallet_flutter
-description: Natrium - Fast, Robust & Secure NANO Wallet.
+description: BTCOW - Fast, Robust & Secure Infinitum Wallet.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
-version: 2.4.5+83
+version: 2.6.1+96
 
 environment:
   sdk: ">=2.11.99 <3.0.0"
@@ -23,8 +23,9 @@ dependencies:
   # Nano core functions
   flutter_nano_ffi:
     git:
-      url: https://github.com/appditto/flutter_nano_ffi.git
-      ref: master
+      url: https://github.com/bitcoinnanolabs/flutter_nano_ffi.git
+      ref: main
+
   # Shared prefs
   shared_preferences: ^2.0.8
 
@@ -84,7 +85,7 @@ dependencies:
       ref: master
 
   # File picker
-  file_picker: ^3.0.0-nullsafety.0
+  file_picker: ^5.2.6
 
   # Deep link support
   #uni_links: ^0.2.0
@@ -106,8 +107,8 @@ dependencies:
   oktoast: ^3.0.0
 
   # Push notifications
-  firebase_messaging: ^11.1.0
-  firebase_core: ^1.10.0
+  firebase_messaging: ^14.3.0
+  firebase_core: ^2.8.0
 
   # Slidable list actions
   flutter_slidable: ^0.5.7
@@ -145,6 +146,8 @@ dependencies:
       ref: master
 
   devicelocale: ^0.4.1
+
+  rive: ^0.10.3
 
 dependency_overrides:
   analyzer: ^2.7.0
@@ -201,6 +204,7 @@ flutter:
   assets:
     - assets/QR.svg
     - assets/welcome_animation.flr
+    - assets/welcome_animation.riv
     - assets/send_animation.flr
     - assets/manta_animation.flr
     - assets/transfer_animation_natriumwalletonly.flr

@@ -5,11 +5,9 @@ import 'dart:math';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_nano_ffi/flutter_nano_ffi.dart';
-import 'package:natrium_wallet_flutter/localization.dart';
 import 'package:natrium_wallet_flutter/model/available_block_explorer.dart';
 import 'package:natrium_wallet_flutter/model/wallet.dart';
 import 'package:event_taxi/event_taxi.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:natrium_wallet_flutter/network/model/response/accounts_balances_response.dart';
@@ -27,7 +25,6 @@ import 'package:natrium_wallet_flutter/model/db/account.dart';
 import 'package:natrium_wallet_flutter/util/ninja/api.dart';
 import 'package:natrium_wallet_flutter/util/ninja/ninja_node.dart';
 import 'package:natrium_wallet_flutter/network/model/block_types.dart';
-import 'package:natrium_wallet_flutter/network/model/request/account_history_request.dart';
 import 'package:natrium_wallet_flutter/network/model/request/fcm_update_request.dart';
 import 'package:natrium_wallet_flutter/network/model/request/subscribe_request.dart';
 import 'package:natrium_wallet_flutter/network/model/response/account_history_response.dart';
@@ -43,7 +40,6 @@ import 'package:natrium_wallet_flutter/util/nanoutil.dart';
 import 'package:natrium_wallet_flutter/network/account_service.dart';
 import 'package:natrium_wallet_flutter/bus/events.dart';
 
-import 'util/sharedprefsutil.dart';
 
 class _InheritedStateContainer extends InheritedWidget {
   // Data is your entire state. In our case just 'User'
@@ -90,7 +86,7 @@ class StateContainer extends StatefulWidget {
 class StateContainerState extends State<StateContainer> {
   final Logger log = sl.get<Logger>();
 
-  // Minimum receive = 0.000001 NANO
+  // Minimum receive = 0.000001 BTCO
   String receiveThreshold = BigInt.from(10).pow(24).toString();
 
   AppWallet wallet;
@@ -99,8 +95,8 @@ class StateContainerState extends State<StateContainer> {
   AvailableCurrency curCurrency = AvailableCurrency(AvailableCurrencyEnum.USD);
   LanguageSetting curLanguage = LanguageSetting(AvailableLanguage.DEFAULT);
   AvailableBlockExplorer curBlockExplorer =
-      AvailableBlockExplorer(AvailableBlockExplorerEnum.NANOCRAWLER);
-  BaseTheme curTheme = NatriumTheme();
+      AvailableBlockExplorer(AvailableBlockExplorerEnum.BTCOBLOCK);
+  BaseTheme curTheme = HeliumTheme();
   // Currently selected account
   Account selectedAccount =
       Account(id: 1, name: "AB", index: 0, lastAccess: 0, selected: true);
@@ -535,7 +531,7 @@ class StateContainerState extends State<StateContainer> {
   void handleSubscribeResponse(SubscribeResponse response) {
     // Combat spam by raising minimum receive if pending block count is large enough
     if (response.pendingCount != null && response.pendingCount > 50) {
-      // Bump min receive to 0.05 NANO
+      // Bump min receive to 0.05 BTCO
       receiveThreshold = BigInt.from(5).pow(28).toString();
     }
     // Set currency locale here for the UI to access

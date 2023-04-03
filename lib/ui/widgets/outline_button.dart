@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 // The total time to make the button's fill color opaque and change
@@ -447,32 +446,30 @@ class _OutlineButtonState extends State<_OutlineButton>
     return AnimatedBuilder(
       animation: _controller,
       builder: (BuildContext context, Widget child) {
-        return RaisedButton(
-          textColor: widget.textColor,
-          disabledTextColor: widget.disabledTextColor,
-          color: _getFillColor(),
-          splashColor: widget.splashColor,
-          focusColor: widget.focusColor,
-          hoverColor: widget.hoverColor,
-          highlightColor: widget.highlightColor,
-          disabledColor: Colors.transparent,
+        return ElevatedButton(
           onPressed: widget.onPressed,
           onLongPress: widget.onLongPress,
-          elevation: 0.0,
-          disabledElevation: 0.0,
-          focusElevation: 0.0,
-          hoverElevation: 0.0,
-          highlightElevation: _getHighlightElevation(),
-          onHighlightChanged: _handleHighlightChanged,
-          padding: widget.padding,
-          visualDensity: widget.visualDensity ?? theme.visualDensity,
-          shape: _OutlineBorder(
-            shape: widget.shape,
-            side: _getOutline(),
+          style: ElevatedButton.styleFrom(
+            primary: _getFillColor(),
+            onPrimary: widget.textColor,
+            onSurface: widget.disabledTextColor,
+            /*splash: widget.splashColor,
+            focus: widget.focusColor,
+            hover: widget.hoverColor,
+            highlight: widget.highlightColor,
+            elevation: 0.0,
+            disabledElevation: 0.0,
+            focusElevation: 0.0,
+            hoverElevation: 0.0,
+            highlightElevation: _getHighlightElevation(),
+            padding: widget.padding,
+            shape: _OutlineBorder(
+              shape: widget.shape,
+              side: _getOutline(),
+            ),
+            clipBehavior: widget.clipBehavior,
+            animationDuration: _kElevationDuration,*/
           ),
-          clipBehavior: widget.clipBehavior,
-          focusNode: widget.focusNode,
-          animationDuration: _kElevationDuration,
           child: widget.child,
         );
       },

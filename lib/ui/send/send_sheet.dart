@@ -336,6 +336,20 @@ class _SendSheetState extends State<SendSheet> {
                                               ),
                                               TextSpan(
                                                 text: _localCurrencyMode
+                                                    ? ""
+                                                    : "",
+                                                style: TextStyle(
+                                                  color:
+                                                      StateContainer.of(context)
+                                                          .curTheme
+                                                          .primary60,
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'AppIcons',
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: _localCurrencyMode
                                                     ? StateContainer.of(context)
                                                         .wallet
                                                         .getLocalCurrencyPrice(
@@ -345,7 +359,7 @@ class _SendSheetState extends State<SendSheet> {
                                                             locale: StateContainer
                                                                     .of(context)
                                                                 .currencyLocale)
-                                                    : "Ӿ" + StateContainer.of(context)
+                                                    : StateContainer.of(context)
                                                         .wallet
                                                         .getAccountBalanceDisplay(),
                                                 style: TextStyle(
@@ -804,7 +818,7 @@ class _SendSheetState extends State<SendSheet> {
 
   void toggleLocalCurrency() {
     // Keep a cache of previous amounts because, it's kinda nice to see approx what nano is worth
-    // this way you can tap button and tap back and not end up with X.9993451 NANO
+    // this way you can tap button and tap back and not end up with X.9993451 BTCO
     if (_localCurrencyMode) {
       // Switching to crypto-mode
       String cryptoAmountStr;
@@ -854,7 +868,7 @@ class _SendSheetState extends State<SendSheet> {
         Container(
           height: 42,
           width: double.infinity - 5,
-          child: FlatButton(
+          child: TextButton(
             onPressed: () {
               _sendAddressController.text = contact.name;
               _sendAddressFocusNode.unfocus();

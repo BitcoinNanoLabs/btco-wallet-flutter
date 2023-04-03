@@ -18,7 +18,6 @@ import 'package:natrium_wallet_flutter/network/model/response/process_response.d
 import 'package:natrium_wallet_flutter/service_locator.dart';
 import 'package:natrium_wallet_flutter/ui/util/ui_util.dart';
 import 'package:natrium_wallet_flutter/ui/widgets/app_text_field.dart';
-import 'package:natrium_wallet_flutter/ui/widgets/sheets.dart';
 import 'package:natrium_wallet_flutter/ui/widgets/buttons.dart';
 import 'package:natrium_wallet_flutter/ui/widgets/dialog.dart';
 import 'package:natrium_wallet_flutter/ui/widgets/security.dart';
@@ -292,7 +291,7 @@ class _ChangeRepManualSheetState extends State<ChangeRepManualSheet> {
                                 .toUpperCase(),
                             Dimens.BUTTON_TOP_DIMENS,
                             onPressed: () async {
-                              if (!NanoAccounts.isValid(NanoAccountType.NANO,
+                              if (!NanoAccounts.isValid(NanoAccountType.BTCO,
                                   widget.repController.text)) {
                                 return;
                               }

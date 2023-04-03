@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:natrium_wallet_flutter/network/model/response/alerts_response_item.dart';
 import 'package:natrium_wallet_flutter/util/sharedprefsutil.dart';
 import 'package:logger/logger.dart';
-import 'package:natrium_wallet_flutter/model/wallet.dart';
 import 'package:natrium_wallet_flutter/network/model/block_types.dart';
 import 'package:natrium_wallet_flutter/network/model/request/account_info_request.dart';
 import 'package:natrium_wallet_flutter/network/model/request/block_info_request.dart';
@@ -30,7 +29,6 @@ import 'package:natrium_wallet_flutter/network/model/request/process_request.dar
 import 'package:natrium_wallet_flutter/network/model/response/account_history_response.dart';
 import 'package:natrium_wallet_flutter/network/model/response/block_info_item.dart';
 import 'package:natrium_wallet_flutter/network/model/response/error_response.dart';
-import 'package:natrium_wallet_flutter/network/model/response/account_history_response_item.dart';
 import 'package:natrium_wallet_flutter/network/model/response/accounts_balances_response.dart';
 import 'package:natrium_wallet_flutter/network/model/response/callback_response.dart';
 import 'package:natrium_wallet_flutter/network/model/response/subscribe_response.dart';
@@ -39,10 +37,9 @@ import 'package:natrium_wallet_flutter/network/model/response/pending_response.d
 import 'package:natrium_wallet_flutter/network/model/response/process_response.dart';
 import 'package:natrium_wallet_flutter/bus/events.dart';
 
-// Server Connection String
-const String _SERVER_ADDRESS = "wss://testapp.natrium.io";
-const String _SERVER_ADDRESS_HTTP = "https://testapp.natrium.io/api";
-const String _SERVER_ADDRESS_ALERTS = "https://testapp.natrium.io/alerts";
+const String _SERVER_ADDRESS = "wss://wallet.bitcoinnano.org";
+const String _SERVER_ADDRESS_HTTP = "https://wallet.bitcoinnano.org/api";
+const String _SERVER_ADDRESS_ALERTS = "https://wallet.bitcoinnano.org/alerts";
 
 Map decodeJson(dynamic src) {
   return json.decode(src);
@@ -171,6 +168,7 @@ class AccountService {
     bool reset = false;
     try {
       if (_channel != null && _channel.sink != null && _isConnected) {
+        log.d("Sending $message");
         _channel.sink.add(message);
       } else {
         reset = true; // Re-establish connection
@@ -197,7 +195,7 @@ class AccountService {
     await _lock.synchronized(() async {
       _isConnected = true;
       _isConnecting = false;
-      //log.d("Received $message");
+      log.d("Received $message");
       Map msg = await compute(decodeJson, message);
       // Determine response type
       if (msg.containsKey("uuid") ||
@@ -364,6 +362,7 @@ class AccountService {
   Future<AccountInfoResponse> getAccountInfo(String account) async {
     AccountInfoRequest request = AccountInfoRequest(account: account);
     dynamic response = await makeHttpRequest(request);
+    log.d(response);
     if (response is ErrorResponse) {
       if (response.error == "Account not found") {
         return AccountInfoResponse(unopened: true);
@@ -410,6 +409,7 @@ class AccountService {
     AccountHistoryRequest request =
         AccountHistoryRequest(account: account, count: count);
     dynamic response = await makeHttpRequest(request);
+    log.d(response);
     if (response is ErrorResponse) {
       throw Exception("Received error ${response.error}");
     }
@@ -424,6 +424,7 @@ class AccountService {
     AccountsBalancesRequest request =
         AccountsBalancesRequest(accounts: accounts);
     dynamic response = await makeHttpRequest(request);
+    log.d(response);
     if (response is ErrorResponse) {
       throw Exception("Received error ${response.error}");
     }
@@ -546,6 +547,7 @@ class AccountService {
   }
 
   Future<AlertResponseItem> getAlert(String lang) async {
+    log.d(_SERVER_ADDRESS_ALERTS + "/" + lang);
     http.Response response = await http.get(
         Uri.parse(_SERVER_ADDRESS_ALERTS + "/" + lang),
         headers: {"Accept": "application/json"});

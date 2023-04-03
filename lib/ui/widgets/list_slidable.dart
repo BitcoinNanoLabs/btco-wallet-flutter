@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:natrium_wallet_flutter/service_locator.dart';
 import 'package:natrium_wallet_flutter/util/hapticutil.dart';
@@ -138,7 +137,7 @@ abstract class SlideToDismissDelegate {
 /// The further slide action will grow faster than the other ones.
 class SlideToDismissDrawerDelegate extends SlideToDismissDelegate {
   const SlideToDismissDrawerDelegate({
-    Map<SlideActionType, double> dismissThresholds:
+    Map<SlideActionType, double> dismissThresholds =
         const <SlideActionType, double>{},
     VoidCallback onResize,
     DismissSlideActionCallback onDismissed,
@@ -1346,7 +1345,7 @@ class IconSlideAction extends ClosableSlideAction {
       overflow: TextOverflow.ellipsis,
       style: Theme.of(context)
           .primaryTextTheme
-          .caption
+          .bodySmall
           .copyWith(color: foregroundColor ?? estimatedColor),
     );
     return Container(

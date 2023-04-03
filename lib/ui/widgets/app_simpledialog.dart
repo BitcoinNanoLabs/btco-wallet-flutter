@@ -3,11 +3,9 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:natrium_wallet_flutter/appstate_container.dart';
 
 // Examples can assume:
@@ -272,7 +270,7 @@ class AppAlertDialog extends StatelessWidget {
             EdgeInsetsDirectional.fromSTEB(
                 24.0, 24.0, 24.0, content == null ? 20.0 : 0.0),
         child: DefaultTextStyle(
-          style: Theme.of(context).textTheme.headline1,
+          style: Theme.of(context).textTheme.displayLarge,
           child: Semantics(child: title, namesRoute: true),
         ),
       ));
@@ -293,7 +291,7 @@ class AppAlertDialog extends StatelessWidget {
         child: Padding(
           padding: contentPadding,
           child: DefaultTextStyle(
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
             child: content,
           ),
         ),
@@ -536,7 +534,7 @@ class AppSimpleDialog extends StatelessWidget {
       body.add(Padding(
           padding: titlePadding,
           child: DefaultTextStyle(
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.displayLarge,
             child: Semantics(namesRoute: true, child: title),
           )));
     } else {

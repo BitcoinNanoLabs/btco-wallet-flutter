@@ -76,40 +76,60 @@ class _IntroBackupSeedState extends State<IntroBackupSeedPage> {
                               start: smallScreen(context) ? 15 : 20),
                           height: 50,
                           width: 50,
-                          child: FlatButton(
-                              highlightColor:
-                                  StateContainer.of(context).curTheme.text15,
-                              splashColor:
-                                  StateContainer.of(context).curTheme.text15,
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50.0)),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
                               padding: EdgeInsets.all(0.0),
-                              child: Icon(AppIcons.back,
-                                  color:
-                                      StateContainer.of(context).curTheme.text,
-                                  size: 24)),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                              ),
+                            ).copyWith(
+                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.focused))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.hovered))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.pressed))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  return null;
+                              }),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(AppIcons.back,
+                              color:
+                                  StateContainer.of(context).curTheme.text,
+                              size: 24)),
                         ),
                         // Switch between Secret Phrase and Seed
                         Container(
                           margin: EdgeInsetsDirectional.only(
                               end: smallScreen(context) ? 15 : 20),
-                          child: FlatButton(
-                            highlightColor:
-                                StateContainer.of(context).curTheme.text15,
-                            splashColor:
-                                StateContainer.of(context).curTheme.text15,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsetsDirectional.only(
+                                top: 6, bottom: 6, start: 12, end: 12),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                              ),
+                            ).copyWith(
+                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.focused))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.hovered))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.pressed))
+                                      return StateContainer.of(context).curTheme.text15;
+                                  return null;
+                              }),
+                            ),
                             onPressed: () {
                               setState(() {
                                 _showMnemonic = !_showMnemonic;
                               });
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0)),
-                            padding: EdgeInsetsDirectional.only(
-                                top: 6, bottom: 6, start: 12, end: 12),
                             child: Row(
                               children: [
                                 Container(

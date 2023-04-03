@@ -23,31 +23,38 @@ class AppButton {
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.all(Radius.circular(100.0)),
               boxShadow: [StateContainer.of(context).curTheme.boxShadowButton],
             ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0)),
-              color: disabled
-                  ? StateContainer.of(context).curTheme.primary60
-                  : StateContainer.of(context).curTheme.primary,
-              child: AutoSizeText(buttonText,
-                  textAlign: TextAlign.center,
-                  style: AppStyles.textStyleButtonPrimary(context),
-                  maxLines: 1,
-                  stepGranularity: 0.5),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                ),
+              ).copyWith(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.disabled)) {
+                      return StateContainer.of(context).curTheme.primary60;
+                    }
+                    return StateContainer.of(context).curTheme.primary;
+                  },
+                ),
+              ),
               onPressed: () {
                 if (onPressed != null && !disabled) {
                   onPressed();
                 }
                 return;
               },
-              highlightColor: StateContainer.of(context).curTheme.background40,
-              splashColor: StateContainer.of(context).curTheme.background40,
+              child: AutoSizeText(buttonText,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textStyleButtonPrimary(context),
+                  maxLines: 1,
+                  stepGranularity: 0.5),
             ),
           ),
         );
@@ -101,22 +108,30 @@ class AppButton {
         return Expanded(
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.all(Radius.circular(100.0)),
               boxShadow: [StateContainer.of(context).curTheme.boxShadowButton],
             ),
             height: 55,
             margin: EdgeInsetsDirectional.fromSTEB(
                 dimens[0], dimens[1], dimens[2], dimens[3]),
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0)),
-              color: StateContainer.of(context).curTheme.success,
-              child: AutoSizeText(
-                buttonText,
-                textAlign: TextAlign.center,
-                style: AppStyles.textStyleButtonPrimaryGreen(context),
-                maxLines: 1,
-                stepGranularity: 0.5,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: StateContainer.of(context).curTheme.success,
+                padding: EdgeInsets.all(0.0),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                ),
+              ).copyWith(
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.focused))
+                      return StateContainer.of(context).curTheme.success30;
+                    if (states.contains(MaterialState.hovered))
+                        return StateContainer.of(context).curTheme.success30;
+                    if (states.contains(MaterialState.pressed))
+                        return StateContainer.of(context).curTheme.successDark;
+                    return null;
+                }),
               ),
               onPressed: () {
                 if (onPressed != null && !disabled) {
@@ -124,8 +139,13 @@ class AppButton {
                 }
                 return;
               },
-              highlightColor: StateContainer.of(context).curTheme.success30,
-              splashColor: StateContainer.of(context).curTheme.successDark,
+              child: AutoSizeText(
+                buttonText,
+                textAlign: TextAlign.center,
+                style: AppStyles.textStyleButtonPrimaryGreen(context),
+                maxLines: 1,
+                stepGranularity: 0.5,
+              ),
             ),
           ),
         );

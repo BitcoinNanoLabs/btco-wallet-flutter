@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:natrium_wallet_flutter/util/numberutil.dart';
 

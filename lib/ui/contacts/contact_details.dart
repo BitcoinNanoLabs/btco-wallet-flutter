@@ -57,11 +57,25 @@ class ContactDetailsSheet {
                           height: 50,
                           margin: EdgeInsetsDirectional.only(
                               top: 10.0, start: 10.0),
-                          child: FlatButton(
-                            highlightColor:
-                                StateContainer.of(context).curTheme.text15,
-                            splashColor:
-                                StateContainer.of(context).curTheme.text15,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(13.0),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                              ),
+                              tapTargetSize: MaterialTapTargetSize.padded,
+                            ).copyWith(
+                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.focused))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.hovered))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.pressed))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  return null;
+                              }),
+                            ),
                             onPressed: () {
                               AppDialogs.showConfirmDialog(
                                   context,
@@ -105,13 +119,9 @@ class ContactDetailsSheet {
                                       AppLocalization.of(context).no, context));
                             },
                             child: Icon(AppIcons.trashcan,
-                                size: 24,
-                                color:
-                                    StateContainer.of(context).curTheme.text),
-                            padding: EdgeInsets.all(13.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100.0)),
-                            materialTapTargetSize: MaterialTapTargetSize.padded,
+                              size: 24,
+                              color:
+                                  StateContainer.of(context).curTheme.text),
                           ),
                         ),
                         // The header of the sheet
@@ -140,11 +150,25 @@ class ContactDetailsSheet {
                           height: 50,
                           margin:
                               EdgeInsetsDirectional.only(top: 10.0, end: 10.0),
-                          child: FlatButton(
-                            highlightColor:
-                                StateContainer.of(context).curTheme.text15,
-                            splashColor:
-                                StateContainer.of(context).curTheme.text15,
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(13.0),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                              ),
+                              tapTargetSize: MaterialTapTargetSize.padded,
+                            ).copyWith(
+                              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.focused))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.hovered))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  if (states.contains(MaterialState.pressed))
+                                    return StateContainer.of(context).curTheme.text15;
+                                  return null;
+                              }),
+                            ),
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) {
@@ -153,13 +177,9 @@ class ContactDetailsSheet {
                               }));
                             },
                             child: Icon(AppIcons.search,
-                                size: 24,
-                                color:
-                                    StateContainer.of(context).curTheme.text),
-                            padding: EdgeInsets.all(13.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100.0)),
-                            materialTapTargetSize: MaterialTapTargetSize.padded,
+                              size: 24,
+                              color:
+                                  StateContainer.of(context).curTheme.text),
                           ),
                         ),
                       ],

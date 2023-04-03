@@ -5,8 +5,6 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:flutter/widgets.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // The over-scroll distance that moves the indicator to its maximum
@@ -125,7 +123,7 @@ class ReactiveRefreshIndicator extends StatefulWidget {
   final RefreshCallback onRefresh;
 
   /// The progress indicator's foreground color. The current theme's
-  /// [ThemeData.accentColor] by default.
+  /// [ThemeData.colorScheme.secondary] by default.
   final Color color;
 
   /// The progress indicator's background color. The current theme's
@@ -189,8 +187,8 @@ class ReactiveRefreshIndicatorState extends State<ReactiveRefreshIndicator> with
     final ThemeData theme = Theme.of(context);
     _valueColor = _positionController.drive(
       ColorTween(
-        begin: (widget.color ?? theme.accentColor).withOpacity(0.0),
-        end: (widget.color ?? theme.accentColor).withOpacity(1.0)
+        begin: (widget.color ?? theme.colorScheme.secondary).withOpacity(0.0),
+        end: (widget.color ?? theme.colorScheme.secondary).withOpacity(1.0)
       ).chain(CurveTween(
         curve: const Interval(0.0, 1.0 / _kDragSizeFactorLimit)
       )),
@@ -278,7 +276,7 @@ class ReactiveRefreshIndicatorState extends State<ReactiveRefreshIndicator> with
     if (notification.depth != 0 || !notification.leading)
       return false;
     if (_mode == _RefreshIndicatorMode.drag) {
-      notification.disallowGlow();
+      notification.disallowIndicator();
       return true;
     }
     return false;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:natrium_wallet_flutter/themes.dart';
 import 'package:natrium_wallet_flutter/model/setting_item.dart';
 
-enum ThemeOptions { NATRIUM, TITANIUM, INDIUM, NEPTUNIUM, THORIUM, CARBON }
+enum ThemeOptions { HELIUM, INFINITUM, NIHONIUM, CHROMIUM, ADAMANTIUM, CARBON }
 
 /// Represent notification on/off setting
 class ThemeSetting extends SettingSelectionItem {
@@ -14,17 +14,18 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.CARBON:
         return "Carbon";
-      case ThemeOptions.THORIUM:
-        return "Thorium";
-      case ThemeOptions.NEPTUNIUM:
-        return "Neptunium";
-      case ThemeOptions.INDIUM:
-        return "Indium";
-      case ThemeOptions.TITANIUM:
-        return "Titanium";
-      case ThemeOptions.NATRIUM:
+      case ThemeOptions.ADAMANTIUM:
+        return "Adamantium";
+      case ThemeOptions.CHROMIUM:
+        return "Chromium";
+      case ThemeOptions.NIHONIUM:
+        return "Nihonium";
+      case ThemeOptions.INFINITUM:
+        return "Infinitum";
+      case ThemeOptions.HELIUM:
+        return "Helium";
       default:
-        return "Natrium";
+        return "Infinitum";
     }
   }
 
@@ -32,17 +33,17 @@ class ThemeSetting extends SettingSelectionItem {
     switch (theme) {
       case ThemeOptions.CARBON:
         return CarbonTheme();
-      case ThemeOptions.THORIUM:
-        return ThoriumTheme();
-      case ThemeOptions.NEPTUNIUM:
-        return NeptuniumTheme();
-      case ThemeOptions.INDIUM:
-        return IndiumTheme();
-      case ThemeOptions.TITANIUM:
-        return TitaniumTheme();
-      case ThemeOptions.NATRIUM:
+      case ThemeOptions.ADAMANTIUM:
+        return AdamantiumTheme();
+      case ThemeOptions.CHROMIUM:
+        return ChromiumTheme();
+      case ThemeOptions.NIHONIUM:
+        return NihoniumTheme();
+      case ThemeOptions.INFINITUM:
+        return InfinitumTheme();
+      case ThemeOptions.HELIUM:
       default:
-        return NatriumTheme();
+        return HeliumTheme();
     }
   }
 

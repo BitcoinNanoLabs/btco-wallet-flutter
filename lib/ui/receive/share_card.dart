@@ -1,15 +1,12 @@
-import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:natrium_wallet_flutter/app_icons.dart';
 import 'package:natrium_wallet_flutter/appstate_container.dart';
 import 'package:natrium_wallet_flutter/themes.dart';
 import 'package:natrium_wallet_flutter/ui/util/ui_util.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flare_flutter/flare_actor.dart';
 
 class AppShareCard extends StatefulWidget {
   final GlobalKey key;
@@ -83,11 +80,11 @@ class _AppShareCardState extends State<AppShareCard> {
                     Center(
                       child: Container(
                         width:
-                            (StateContainer.of(context).curTheme is IndiumTheme)
+                            (StateContainer.of(context).curTheme is NihoniumTheme)
                                 ? 95
                                 : 100,
                         height:
-                            (StateContainer.of(context).curTheme is IndiumTheme)
+                            (StateContainer.of(context).curTheme is NihoniumTheme)
                                 ? 95
                                 : 100,
                         decoration: BoxDecoration(
@@ -110,11 +107,11 @@ class _AppShareCardState extends State<AppShareCard> {
                                 color: Colors.white,
                                 border: Border.all(
                                   width: (StateContainer.of(context).curTheme
-                                          is IndiumTheme)
+                                          is NihoniumTheme)
                                       ? 1.44545
                                       : 1.06,
                                   color: (StateContainer.of(context).curTheme
-                                          is IndiumTheme)
+                                          is NihoniumTheme)
                                       ? StateContainer.of(context)
                                           .curTheme
                                           .backgroundDark
@@ -128,11 +125,11 @@ class _AppShareCardState extends State<AppShareCard> {
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     width: (StateContainer.of(context).curTheme
-                                            is IndiumTheme)
+                                            is NihoniumTheme)
                                         ? 1.06
                                         : 1.44545,
                                     color: (StateContainer.of(context).curTheme
-                                            is IndiumTheme)
+                                            is NihoniumTheme)
                                         ? StateContainer.of(context)
                                             .curTheme
                                             .primary
@@ -247,7 +244,7 @@ class _AppShareCardState extends State<AppShareCard> {
                         Container(
                           width: 29,
                           child: Icon(
-                            AppIcons.nanohorizontal,
+                            AppIcons.nanocurrency,
                             color: StateContainer.of(context).curTheme.primary,
                             size: 13,
                           ),
@@ -256,7 +253,7 @@ class _AppShareCardState extends State<AppShareCard> {
                           width: 60,
                           margin: EdgeInsets.only(top: 1),
                           child: AutoSizeText(
-                            "NANO",
+                            "BTCO",
                             style: TextStyle(
                               color:
                                   StateContainer.of(context).curTheme.primary,
@@ -429,7 +426,7 @@ class _AppShareCardState extends State<AppShareCard> {
                     width: 97,
                     margin: EdgeInsets.only(bottom: 12.5),
                     child: AutoSizeText(
-                      "\$XNO      NANO.ORG",
+                      "\$BITCOINNANO      BITCOINNANO.ORG",
                       minFontSize: 0.1,
                       stepGranularity: 0.1,
                       maxLines: 1,
